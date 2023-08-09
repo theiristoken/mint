@@ -16,7 +16,7 @@ svg:hover {
   25%, 44% {
     transform: none;
   }
-  50%, 60% {
+  50%, 66% {
     transform: translateX(68px) translateY(-40px) skewX(5deg) skewY(2deg) scaleX(0.95);
   }
   66%, 100% {

@@ -4,10 +4,14 @@ import type { AppProps } from 'next/app'
 import Head from 'next/head';
 
 
-const activeChain = 420;
+const activeChain = ChainId.OptimismGoerli;
+
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <ThirdwebProvider activeChain={activeChain}>
+    <ThirdwebProvider 
+      clientId='13ed6626c449cb98a41be92c311a7ba8'
+      secretKey='HV66ecd3ATFxFerCVpSPXaWWsIPQtJdvTh_86-FxIHqSxWxaIuY0GU19cV094MwZ25UUkoNy0YobuxuMgBdzMA'
+      activeChain={activeChain}>
       <Head>
         <title>The iris Token</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />

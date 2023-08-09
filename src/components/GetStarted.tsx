@@ -12,7 +12,7 @@ export default function GetStarted() {
 				</div>
 				<div>
 					<h1 className="font-bold">Connect your wallet</h1>
-					<p>You need a compatible wallet such as 
+					<p>You need an EVM compatible wallet such as 
 						<a className="font-bold hover:text-neutral-200 text-slate-600 mx-1" href="https://metamask.io" target="_blank">Metamask</a>or 
 						<a className="font-bold hover:text-neutral-200 text-slate-600 ml-1" href="https://rainbow.me" target="_blank">Rainbow</a>
 					.</p>
