@@ -1,6 +1,3 @@
-import { CredentialType, IDKitWidget } from "@worldcoin/idkit";
-import type { ISuccessResult } from "@worldcoin/idkit";
-import type { VerifyReply } from "./api/verify";
 import React, { useState } from 'react';
 import Title from "@/components/Title";
 import EyeBall from "@/components/EyeBall";

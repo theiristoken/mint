@@ -1,4 +1,3 @@
-import { VerifyReply } from "@/pages/api/verify";
 import { ChainId, ConnectWallet, useAddress, useContract, useDisconnect, useNetworkMismatch, useSafe, useSwitchChain } from "@thirdweb-dev/react";
 import { CredentialType, IDKitWidget, ISuccessResult } from "@worldcoin/idkit";
 import { useEffect, useState } from "react";
