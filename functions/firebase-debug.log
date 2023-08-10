@@ -1,0 +1,161 @@
+[debug] [2023-08-10T12:11:37.179Z] ----------------------------------------------------------------------
+[debug] [2023-08-10T12:11:37.180Z] Command:       /Users/nadir/.nvm/versions/node/v18.16.0/bin/node /Users/nadir/.nvm/versions/node/v18.16.0/bin/firebase deploy
+[debug] [2023-08-10T12:11:37.180Z] CLI Version:   12.4.7
+[debug] [2023-08-10T12:11:37.180Z] Platform:      darwin
+[debug] [2023-08-10T12:11:37.181Z] Node Version:  v18.16.0
+[debug] [2023-08-10T12:11:37.181Z] Time:          Thu Aug 10 2023 14:11:37 GMT+0200 (Central European Summer Time)
+[debug] [2023-08-10T12:11:37.181Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-08-10T12:11:37.224Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-08-10T12:11:37.224Z] > authorizing via signed-in user (studio66sasu@gmail.com)
+[debug] [2023-08-10T12:11:37.224Z] [iam] checking project theiristoken for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-08-10T12:11:37.225Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/theiristoken:testIamPermissions [none]
+[debug] [2023-08-10T12:11:37.225Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/theiristoken:testIamPermissions x-goog-quota-user=projects/theiristoken
+[debug] [2023-08-10T12:11:37.226Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/theiristoken:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-08-10T12:11:37.875Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/theiristoken:testIamPermissions 200
+[debug] [2023-08-10T12:11:37.876Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/theiristoken:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-08-10T12:11:37.876Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/theiristoken/serviceAccounts/theiristoken@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-08-10T12:11:37.876Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/theiristoken/serviceAccounts/theiristoken@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-08-10T12:11:38.493Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/theiristoken/serviceAccounts/theiristoken@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-08-10T12:11:38.494Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/theiristoken/serviceAccounts/theiristoken@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-08-10T12:11:38.494Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/theiristoken [none]
+[debug] [2023-08-10T12:11:38.733Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/theiristoken 200
+[debug] [2023-08-10T12:11:38.734Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/theiristoken {"projectId":"theiristoken","projectNumber":"5083487111","displayName":"theiristoken","name":"projects/theiristoken","resources":{"hostingSite":"theiristoken"},"state":"ACTIVE","etag":"1_9c8d06c5-790a-4117-9dd7-5cd84775914b"}
+[debug] [2023-08-10T12:11:41.318Z] defaultcredentials: writing to file /Users/nadir/.config/firebase/studio66sasu_gmail_com_application_default_credentials.json
+[debug] [2023-08-10T12:11:41.322Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/theiristoken/sites pageToken=&pageSize=10
+[debug] [2023-08-10T12:11:42.129Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/theiristoken/sites 200
+[debug] [2023-08-10T12:11:42.129Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/theiristoken/sites {"sites":[{"name":"projects/theiristoken/sites/theiristoken","defaultUrl":"https://theiristoken.web.app","appId":"1:5083487111:web:e75910c394f45ce8d89122","type":"DEFAULT_SITE"}]}
+[debug] [2023-08-10T12:11:42.129Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:5083487111:web:e75910c394f45ce8d89122/config [none]
+[debug] [2023-08-10T12:11:42.889Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:5083487111:web:e75910c394f45ce8d89122/config 200
+[debug] [2023-08-10T12:11:42.889Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:5083487111:web:e75910c394f45ce8d89122/config {"projectId":"theiristoken","appId":"1:5083487111:web:e75910c394f45ce8d89122","storageBucket":"theiristoken.appspot.com","apiKey":"AIzaSyBRd7V3IXtUjLoamAD8rqIKiN-lktzB1d0","authDomain":"theiristoken.firebaseapp.com","messagingSenderId":"5083487111"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[info] info  - Loaded env from /Users/nadir/Documents/tit/mint/.env.local
+
+[info] info  - Linting and checking validity of types...
+
+[info] info  - Creating an optimized production build...
+
+[debug] [2023-08-10T12:12:03.111Z] ----------------------------------------------------------------------
+[debug] [2023-08-10T12:12:03.113Z] Command:       /Users/nadir/.nvm/versions/node/v18.16.0/bin/node /Users/nadir/.nvm/versions/node/v18.16.0/bin/firebase deploy --only functions
+[debug] [2023-08-10T12:12:03.113Z] CLI Version:   12.4.7
+[debug] [2023-08-10T12:12:03.113Z] Platform:      darwin
+[debug] [2023-08-10T12:12:03.113Z] Node Version:  v18.16.0
+[debug] [2023-08-10T12:12:03.114Z] Time:          Thu Aug 10 2023 14:12:03 GMT+0200 (Central European Summer Time)
+[debug] [2023-08-10T12:12:03.114Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-08-10T12:12:03.156Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-08-10T12:12:03.156Z] > authorizing via signed-in user (studio66sasu@gmail.com)
+[debug] [2023-08-10T12:12:03.156Z] [iam] checking project theiristoken for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-08-10T12:12:03.158Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/theiristoken:testIamPermissions [none]
+[debug] [2023-08-10T12:12:03.158Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/theiristoken:testIamPermissions x-goog-quota-user=projects/theiristoken
+[debug] [2023-08-10T12:12:03.158Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/theiristoken:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-08-10T12:12:03.785Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/theiristoken:testIamPermissions 200
+[debug] [2023-08-10T12:12:03.785Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/theiristoken:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-08-10T12:12:03.786Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/theiristoken/serviceAccounts/theiristoken@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-08-10T12:12:03.786Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/theiristoken/serviceAccounts/theiristoken@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-08-10T12:12:04.409Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/theiristoken/serviceAccounts/theiristoken@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-08-10T12:12:04.409Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/theiristoken/serviceAccounts/theiristoken@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'theiristoken'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[info] ✔  functions: Finished running predeploy script. 
+[debug] [2023-08-10T12:12:05.313Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/theiristoken [none]
+[debug] [2023-08-10T12:12:05.623Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/theiristoken 200
+[debug] [2023-08-10T12:12:05.624Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/theiristoken {"projectId":"theiristoken","projectNumber":"5083487111","displayName":"theiristoken","name":"projects/theiristoken","resources":{"hostingSite":"theiristoken"},"state":"ACTIVE","etag":"1_9c8d06c5-790a-4117-9dd7-5cd84775914b"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-08-10T12:12:05.629Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-08-10T12:12:05.629Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/theiristoken
+[debug] [2023-08-10T12:12:05.632Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-08-10T12:12:05.632Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/theiristoken
+[debug] [2023-08-10T12:12:05.635Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudbuild.googleapis.com [none]
+[debug] [2023-08-10T12:12:05.635Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudbuild.googleapis.com x-goog-quota-user=projects/theiristoken
+[debug] [2023-08-10T12:12:05.637Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/artifactregistry.googleapis.com [none]
+[debug] [2023-08-10T12:12:05.637Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/artifactregistry.googleapis.com x-goog-quota-user=projects/theiristoken
+[debug] [2023-08-10T12:12:06.447Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudbuild.googleapis.com 200
+[debug] [2023-08-10T12:12:06.448Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-08-10T12:12:06.449Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/runtimeconfig.googleapis.com 200
+[debug] [2023-08-10T12:12:06.450Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-08-10T12:12:06.463Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/artifactregistry.googleapis.com 200
+[debug] [2023-08-10T12:12:06.463Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-08-10T12:12:06.468Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudfunctions.googleapis.com 200
+[debug] [2023-08-10T12:12:06.468Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-08-10T12:12:06.469Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/theiristoken/adminSdkConfig [none]
+[debug] [2023-08-10T12:12:06.672Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/theiristoken/adminSdkConfig 200
+[debug] [2023-08-10T12:12:06.673Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/theiristoken/adminSdkConfig {"projectId":"theiristoken","storageBucket":"theiristoken.appspot.com"}
+[debug] [2023-08-10T12:12:06.675Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/theiristoken/configs [none]
+[debug] [2023-08-10T12:12:06.967Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/theiristoken/configs 200
+[debug] [2023-08-10T12:12:06.968Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/theiristoken/configs {}
+[debug] [2023-08-10T12:12:06.970Z] Validating nodejs source
+[debug] [2023-08-10T12:12:07.348Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "@thirdweb-dev/react": "^3.14.29",
+    "@thirdweb-dev/sdk": "^3.10.48",
+    "ethers": "^5.7.2",
+    "firebase-admin": "^11.8.0",
+    "firebase-functions": "^4.3.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.15.0",
+    "eslint-config-google": "^0.14.0",
+    "firebase-functions-test": "^3.1.0"
+  },
+  "private": true
+}
+[debug] [2023-08-10T12:12:07.348Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2023-08-10T12:12:07.348Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-08-10T12:12:07.353Z] Found firebase-functions binary at '/Users/nadir/Documents/tit/mint/functions/node_modules/.bin/firebase-functions'
+[info] Serving at port 8906
+
+[debug] [2023-08-10T12:12:08.004Z] Got response from /__/functions.yaml {"endpoints":{"verify":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"callableTrigger":{},"entryPoint":"verify"},"claim":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"callableTrigger":{},"entryPoint":"claim"},"tally":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","labels":{},"scheduleTrigger":{"schedule":"0 * * * *","retryConfig":{"retryCount":null,"maxDoublings":null,"maxRetrySeconds":null,"minBackoffSeconds":null,"maxBackoffSeconds":null},"timeZone":null},"entryPoint":"tally"}},"specVersion":"v1alpha1","requiredAPIs":[{"api":"cloudscheduler.googleapis.com","reason":"Needed for scheduled functions."}]}
+[info] shutdown requested via /__/quitquitquit
+
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged /Users/nadir/Documents/tit/mint/functions (136.42 KB) for uploading 
+[debug] [2023-08-10T12:12:08.042Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/theiristoken/locations/-/functions [none]
+[debug] [2023-08-10T12:12:08.506Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/theiristoken/locations/-/functions 200
+[debug] [2023-08-10T12:12:08.506Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/theiristoken/locations/-/functions {}
+[debug] [2023-08-10T12:12:08.509Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/theiristoken/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2023-08-10T12:12:09.014Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/theiristoken/locations/-/functions 200
+[debug] [2023-08-10T12:12:09.015Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/theiristoken/locations/-/functions {}
+[info] i  functions: ensuring required API cloudscheduler.googleapis.com is enabled... 
+[debug] [2023-08-10T12:12:09.017Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudscheduler.googleapis.com [none]
+[debug] [2023-08-10T12:12:09.017Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudscheduler.googleapis.com x-goog-quota-user=projects/theiristoken
+[debug] [2023-08-10T12:12:09.820Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudscheduler.googleapis.com 200
+[debug] [2023-08-10T12:12:09.821Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudscheduler.googleapis.com [omitted]
+[warn] ⚠  functions: missing required API cloudscheduler.googleapis.com. Enabling now... 
+[debug] [2023-08-10T12:12:09.821Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudscheduler.googleapis.com:enable [none]
+[debug] [2023-08-10T12:12:09.821Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudscheduler.googleapis.com:enable x-goog-quota-user=projects/theiristoken
+[debug] [2023-08-10T12:12:11.255Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudscheduler.googleapis.com:enable 200
+[debug] [2023-08-10T12:12:11.255Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/theiristoken/services/cloudscheduler.googleapis.com:enable [omitted]

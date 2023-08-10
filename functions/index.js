@@ -51,7 +51,7 @@ const appEndpoint = process.env.NEXT_PUBLIC_WLD_APP_ID;
 const verifyEndpoint = `${wldEndpoint}/api/v1/verify/${appEndpoint}`;
 const thirdSecreKey = process.env.THIRDWEB_SECRET_KEY;
 
-export const verify = onCall(async (req) => {
+exports.verify = onCall(async (req) => {
   if (!req.auth) {
     throw new HttpsError("failed-precondition", "The function must be " +
             "called while authenticated.");
@@ -114,7 +114,7 @@ export const verify = onCall(async (req) => {
   });
 });
 
-export const claim = onCall(async (req)=> {
+exports.claim = onCall(async (req)=> {
   if (!req.auth) {
     throw new HttpsError("failed-precondition", "The function must be " +
             "called while authenticated.");
