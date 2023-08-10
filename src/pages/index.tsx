@@ -16,9 +16,10 @@ export default function Home() {
 		<div className="flex flex-col justify-center items-center">
 			<Title/>
 			<EyeBall/>
-			{isLoadingContract && <p>{tokenAddress}</p>}
+			<p>Hello Nadir</p>
+			{/* {isLoadingContract && <p>{tokenAddress}</p>}
 			{tokenSupply && <p>{tokenSupply.displayValue}</p>}
-			{isLoading && <p>Loading...</p>}
+			{isLoading && <p>Loading...</p>} */}
 			{!isLoading && (Number(tokenSupply?.displayValue)==10**9) && <SoldOut/>}
 			{!isLoading && !address && (Number(tokenSupply?.displayValue)<10**9) &&  <GetStarted/>}
 			{!isLoading && address && <Verifier/>}
