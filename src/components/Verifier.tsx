@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { HttpsCallableResult, getFunctions, httpsCallable } from 'firebase/functions';
 import Firebase from "@/firebase";
 import { User, getAuth, onAuthStateChanged, signInAnonymously, signOut } from 'firebase/auth';
-import { VerifyResponse } from "../../functions/src";
 import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
 
 
