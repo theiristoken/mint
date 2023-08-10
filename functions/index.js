@@ -7,14 +7,22 @@
  * See a full list of supported triggers at https://firebase.google.com/docs/functions
  */
 
-import {onCall, HttpsError} from "firebase-functions/v2/https";
-import {onSchedule} from "firebase-functions/v2/scheduler";
+const {onCall, HttpsError} = require("firebase-functions/v2/https");
+const {onSchedule} = require("firebase-functions/v2/scheduler");
+const {initializeApp} = require("firebase-admin/app");
+const {FieldValue, getFirestore} = require("firebase-admin/firestore");
+const logger = require("firebase-functions/logger");
+const {ThirdwebSDK} = require("@thirdweb-dev/sdk");
+const {AwsSecretsManagerWallet} = require(
+    "@thirdweb-dev/wallets/evm/wallets/aws-secrets-manager");
+
+/* import {onSchedule} from "firebase-functions/v2/scheduler";
 import {initializeApp} from "firebase-admin/app";
 import {FieldValue, getFirestore} from "firebase-admin/firestore";
 import * as logger from "firebase-functions/logger";
 import {ThirdwebSDK} from "@thirdweb-dev/sdk";
 import {AwsSecretsManagerWallet} from
-  "@thirdweb-dev/wallets/evm/wallets/aws-secrets-manager";
+  "@thirdweb-dev/wallets/evm/wallets/aws-secrets-manager"; */
 // Start writing functions
 // https://firebase.google.com/docs/functions/typescript
 
@@ -70,14 +78,15 @@ export const verify = onCall(async (req) => {
           wldResponse,
       );
       if (verifyRes.status == 200) {
-        const iviSnap = await getFirestore()
+        const iviDoc = await getFirestore()
             .collection("ivis")
-            .where("wallet", "==", reqBody.signal)
+            .doc(reqBody.signal)
             .get();
-        if (iviSnap.empty) {
+        if (!iviDoc.exists()) {
           await getFirestore()
               .collection("ivis")
-              .add({
+              .doc(reqBody.signal)
+              .set({
                 wallet: reqBody.signal,
                 nullifier_hash: reqBody.nullifier_hash,
                 merkle_root: reqBody.merkle_root,
@@ -113,10 +122,9 @@ export const claim = onCall(async (req)=> {
   const address = req.data.address;
   const iviSnap = await getFirestore()
       .collection("ivis")
-      .where("wallet", "==", address)
-      .where("minted", "==", false)
+      .doc(address)
       .get();
-  if (!iviSnap.empty) {
+  if (iviSnap.exists()) {
     const authorised = iviSnap.docs[0].data().authorised;
     if (authorised) {
       return {signature: iviSnap.docs[0].data().signature};

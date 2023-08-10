@@ -9,8 +9,7 @@ const activeChain = ChainId.OptimismGoerli;
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider 
-      clientId='13ed6626c449cb98a41be92c311a7ba8'
-      secretKey='HV66ecd3ATFxFerCVpSPXaWWsIPQtJdvTh_86-FxIHqSxWxaIuY0GU19cV094MwZ25UUkoNy0YobuxuMgBdzMA'
+      clientId="13ed6626c449cb98a41be92c311a7ba8"
       activeChain={activeChain}>
       <Head>
         <title>The iris Token</title>

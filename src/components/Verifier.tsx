@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { HttpsCallableResult, getFunctions, httpsCallable } from 'firebase/functions';
 import Firebase from "@/firebase";
 import { User, getAuth, onAuthStateChanged, signInAnonymously, signOut } from 'firebase/auth';
-import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
+import { collection, doc, getDoc, getDocs, getFirestore, query, where } from "firebase/firestore";
 
 
 
@@ -60,18 +60,28 @@ export default function Verifier() {
 
 	const fetchWalletInfo = async (address:string) => {
 		setIsLoading(true);
-		const q = query(collection(db, "ivis"), where("wallet", "==", address));
-		const walletSnap = await getDocs(q);
-		if (!walletSnap.empty){
-			const minted = walletSnap.docs[0].data().minted;
-			setMinted(minted);
+		const localMinted = localStorage.getItem('minted');
+		const localVerfied = localStorage.getItem('ivi');
+		const preCondition = localMinted && localVerfied && localMinted==address && localVerfied==address;
+		if (preCondition){
+			setMinted(true);
 			setVerified(true);
+			return;
+		} else {
+			const walletRef = doc(db, "ivis", address);
+			const walletSnap = await getDoc(walletRef);
+			if (walletSnap.exists()){
+				const minted = walletSnap.data().minted;
+				setMinted(minted);
+				setVerified(true);
+			}
 		}
 		setIsLoading(false);
 	}
 
 	const onSuccess = () => {
         setVerified(true);
+		localStorage.setItem('ivi', address??"");
 	};
 
 	const handleProof = async (result: ISuccessResult) => {
@@ -105,6 +115,8 @@ export default function Verifier() {
 			const signature = JSON.parse(JSON.stringify(result.data)).signature;
 			tokenContract?.erc20.signature.mint(signature)
 			.then((tx)=>{
+				localStorage.setItem('minted', address??"");
+				setMinted(true);
 				console.log('minted TiTs');
 				console.log(tx);
 			}).catch((e)=>{
@@ -123,8 +135,8 @@ export default function Verifier() {
 	}
 
 	return (
-		<div>
-			{address && <div className="flex flex-row items-center justify-between w-96">
+		<div className="flex flex-col items-center justify-center w-80 md:w-96">
+			{address && <div className="flex flex-row items-center justify-between w-full">
 				<p className="flex flex-col items-center justify-center self-center text-lg">{formatAddress(address)}</p>
 				<button onClick={disconnect}>
 					<h1 className="py-4 self-center text-md font-bold hover:text-neutral-200">
@@ -151,14 +163,14 @@ export default function Verifier() {
 				</IDKitWidget>
 			</div>}
 
-			{verified && !isLoading && <div className="flex flex-col justify-start items-start w-96">
+			{verified && !isLoading && <div className="flex flex-col justify-start items-start">
 
 
-			<div className="flex flex-col items-center justify-center p-4 self-center">
+			<div className="flex flex-col items-center justify-center p-2 self-center">
 				<p className="flex flex-col items-center justify-center self-center text-lg">You are an iris Verified Individual (iVI).</p>
 			</div>	
 
-			{!isMismatched && <div className="flex flex-col items-center justify-center p-4 self-center">
+			{isMismatched && <div className="flex flex-col items-center justify-center p-4 self-center">
 				<button  
 					disabled={!isMismatched}
 					onClick={switchChain}
@@ -175,11 +187,12 @@ export default function Verifier() {
 					className="bg-neutral-200 py-2 px-8 rounded-lg mx-4 items-center hover:bg-white">
 					<h1 className="font-bold text-black" >Claim 1,000 TiTs</h1>
 				</button>
-				<p className="flex flex-col items-center justify-center self-center text-md text-center mt-4">TiTs are free, but you will have to pay for gas.</p>
+				<p className="flex flex-col items-center justify-center self-center text-md text-center mt-4">TiTs are free, but network gas isn't.</p>
+				<a className="font-bold hover:text-neutral-200 text-slate-600 ml-1" href="https://rainbow.me" target="_blank">You don't have gas money?</a>
 			</div>}	
 			{minted && !isMismatched && <div className="flex flex-col items-center justify-center p-4 self-center">
 
-				<h1 className="font-bold text-black" >You already claimed 1,000 TiTs.</h1>
+				<h1 className="font-bold text-black" >You claimed 1,000 TiTs.</h1>
 
 			</div>}	
 
