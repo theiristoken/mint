@@ -21,12 +21,12 @@ export default function Minter() {
 	const disconnect = useDisconnect();
     const auth = getAuth(Firebase);
 	const db = getFirestore(Firebase);
-	const verifyEndpoint = process.env.NEXT_PUBLIC_VERIFY_ENDPOINT;
-	const claimEndpoint = process.env.NEXT_PUBLIC_CLAIM_ENDPOINT;
-	const chainId = Number(process.env.NEXT_PUBLIC_CHAIN_ID);
-	const tokenAddress = process.env.NEXT_PUBLIC_TOKEN_ADDRESS;
-	const appId = process.env.NEXT_PUBLIC_PUBLIC_WLD_APP_ID;
-	const action = process.env.NEXT_PUBLIC_PUBLIC_WLD_ACTION;
+	const verifyEndpoint = process.env.VERIFY_ENDPOINT;
+	const claimEndpoint = process.env.CLAIM_ENDPOINT;
+	const chainId = Number(process.env.CHAIN_ID);
+	const tokenAddress = process.env.TOKEN_ADDRESS;
+	const appId = process.env.PUBLIC_WLD_APP_ID;
+	const action = process.env.PUBLIC_WLD_ACTION;
 	const { contract: tokenContract, isLoading: isLoadingToken } = useContract(tokenAddress);
 	const { data: tokenData, isLoading: isLoadingBalance } = useTokenBalance(tokenContract, address);
 

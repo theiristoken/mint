@@ -3,8 +3,8 @@ import { ThirdwebProvider } from '@thirdweb-dev/react';
 import type { AppProps } from 'next/app'
 import Head from 'next/head';
 
-const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
-const activeChain = Number(process.env.NEXT_PUBLIC_CHAIN_ID);
+const clientId = process.env.THIRDWEB_CLIENT_ID;
+const activeChain = Number(process.env.CHAIN_ID);
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
