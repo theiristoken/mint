@@ -16,3 +16,4 @@ After the Genesis Offering is complete, admin/minter rights will be revoked to a
 
 
 ** Disclaimer: iris verification is done through a third party. We do not collect, process, store or handle any personal or biometric data. **
+=======
