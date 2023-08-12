@@ -1,43 +1,45 @@
 import React, { useEffect, useState } from 'react';
 import Title from "@/components/Title";
-import EyeBall from "@/components/EyeBall";
 import GetStarted from "@/components/GetStarted";
-import { ChainId, useAddress, useChainId, useContract, useTokenSupply } from "@thirdweb-dev/react";
-import Verifier from "@/components/Verifier";
+import { useAddress } from "@thirdweb-dev/react";
+import Minter from "@/components/Minter";
 import SoldOut from "@/components/SoldOut";
-import { doc, getFirestore, onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, getFirestore, onSnapshot } from 'firebase/firestore';
 import Firebase from '@/firebase';
+import Ball from '@/components/Ball';
+import Loader from '@/components/Loader';
 
 export default function Home() {
 	const address = useAddress();
-	const tokenAddress = "0x32307adfFE088e383AFAa721b06436aDaBA47DBE";
-	const { contract: tokenContract, isLoading: isLoadingContract } = useContract(tokenAddress, "token");
-	//const { data: tokenSupply, isLoading, error } = useTokenSupply(tokenContract);
-	const [claims, setClaims] = useState<number>(0);
-	const [isLoading, setIsLoading] = useState(true);
+	const [claims, setClaims] = useState(0);
 	const db = getFirestore(Firebase);
+	const [ isLoading, setIsLoading ] = useState(true);
 
 	useEffect(()=>{
-		const unsub = onSnapshot(doc(db, "admin", "tally"), (doc) => {
-			if (doc.exists()){
-				const claims = doc.data().claims;
-				console.log('got claims', claims)
-				setClaims(claims);
-			} 
-			setIsLoading(false);
-		});
-		return unsub
-	},[])
+		if (address){
+			getClaims();
+		}
+		setIsLoading(false);
+	},[address])
+
+	const getClaims = async () => {
+		const tallySnap = await getDoc(doc(db, "admin", "tally"));
+		if (tallySnap.exists()){
+			const claims = tallySnap.data().claims;
+			setClaims(claims);
+		}
+	}
+
 
 	return (
 		<div className="flex flex-col justify-center items-center">
 			<Title/>
-			<EyeBall/>
-			{isLoading && <p>Loading...</p>}
-			{!isLoading && <p>{(1000000-claims).toLocaleString()} allowances left</p>}
+			<Ball/>
+			{isLoading && <Loader/>}
+			{!isLoading && claims>100 && <p>{(1000000-claims).toLocaleString("US")} allowances left</p>}
 			{!isLoading && claims>=10**6 && <SoldOut/>}
-			{(!isLoading && !address && claims<10**6) && <GetStarted/>}
-			{!isLoading && address && claims<10**6 && <Verifier/>}
+			{!isLoading && !address && claims<10**6 && <GetStarted/>}
+			{!isLoading && address && claims<10**6 && <Minter/>}
 		</div>
 	);
 }

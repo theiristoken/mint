@@ -1,4 +1,4 @@
-export default function EyeBall() {
+export default function Ball() {
 	return (
 		<div className="items-center flex flex-col">
 			<div className="flex flex-col flex-wrap items-center justify-start bg-black p-4 rounded-3xl my-4">

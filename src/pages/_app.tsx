@@ -1,15 +1,15 @@
 import '@/styles/globals.css'
-import { ChainId, ThirdwebProvider } from '@thirdweb-dev/react';
+import { ThirdwebProvider } from '@thirdweb-dev/react';
 import type { AppProps } from 'next/app'
 import Head from 'next/head';
 
-
-const activeChain = ChainId.OptimismGoerli;
+const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
+const activeChain = Number(process.env.NEXT_PUBLIC_CHAIN_ID);
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider 
-      clientId="13ed6626c449cb98a41be92c311a7ba8"
+      clientId={clientId}
       activeChain={activeChain}>
       <Head>
         <title>The iris Token</title>
@@ -25,7 +25,6 @@ export default function App({ Component, pageProps }: AppProps) {
           name="keywords"
           content="Nadir Hajarabi, crypto, cryptocurrency, digital asset, collateral, defi, blockchain, ico, token, worldcoin, iris scan, world id, metamask, orb, orb verification, eye scan, biometrics, proof of personhood"
         />
-        
       </Head>
       
       <Component {...pageProps} />
