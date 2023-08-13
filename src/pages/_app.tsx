@@ -2,9 +2,10 @@ import '@/styles/globals.css'
 import { ThirdwebProvider } from '@thirdweb-dev/react';
 import type { AppProps } from 'next/app'
 import Head from 'next/head';
+import Constants from "@/constants";
 
-const clientId = process.env.NEXT_PUBLIC_THIRDWEB_CLIENT_ID;
-const activeChain = Number(process.env.NEXT_PUBLIC_CHAIN_ID);
+const clientId = Constants.clientId;
+const activeChain = Constants.activeChain;
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

@@ -35,6 +35,7 @@ export default function Home() {
 		<div className="flex flex-col justify-center items-center">
 			<Title/>
 			<Ball/>
+			<Loader/>
 			{isLoading && <Loader/>}
 			{!isLoading && claims>100 && <p>{(1000000-claims).toLocaleString("US")} allowances left</p>}
 			{!isLoading && claims>=10**6 && <SoldOut/>}

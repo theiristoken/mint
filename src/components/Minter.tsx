@@ -2,6 +2,7 @@ import { ChainId, useAddress, useContract, useDisconnect, useNetworkMismatch, us
 import { CredentialType, IDKitWidget, ISuccessResult } from "@worldcoin/idkit";
 import { useEffect, useState } from "react";
 import Firebase from "@/firebase";
+import Constants from "@/constants";
 import { User, getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/auth';
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import Loader from "./Loader";
@@ -21,12 +22,10 @@ export default function Minter() {
 	const disconnect = useDisconnect();
     const auth = getAuth(Firebase);
 	const db = getFirestore(Firebase);
-	const verifyEndpoint = process.env.NEXT_PUBLIC_VERIFY_ENDPOINT;
-	const claimEndpoint = process.env.NEXT_PUBLIC_CLAIM_ENDPOINT;
-	const chainId = Number(process.env.NEXT_PUBLIC_CHAIN_ID);
-	const tokenAddress = process.env.NEXT_PUBLIC_TOKEN_ADDRESS;
-	const appId = process.env.NEXT_PUBLIC_PUBLIC_WLD_APP_ID;
-	const action = process.env.NEXT_PUBLIC_PUBLIC_WLD_ACTION;
+	const verifyEndpoint = Constants.verifyEndpoint;
+	const claimEndpoint = Constants.claimEndpoint;
+	const activeChain = Constants.activeChain;
+	const tokenAddress = Constants.tokenAddress;
 	const { contract: tokenContract, isLoading: isLoadingToken } = useContract(tokenAddress);
 	const { data: tokenData, isLoading: isLoadingBalance } = useTokenBalance(tokenContract, address);
 
@@ -99,7 +98,7 @@ export default function Minter() {
 			nullifier_hash: result.nullifier_hash,
 			proof: result.proof,
 			credential_type: result.credential_type,
-			action: action!,
+			action: Constants.wldAction,
 			signal: address?? "noaddress",
 		};
 		console.log("Sending proof to backend for verification:\n", JSON.stringify(reqBody));
@@ -145,6 +144,7 @@ export default function Minter() {
 			.then((tx)=>{
 				localStorage.setItem('minted', address?? "noaddress");
 				setMinted(true);
+				setNewMint(true);
 				console.log('minted TiTs', tx);
 				setIsClaiming(false);
 			}).catch((e)=>{
@@ -177,8 +177,8 @@ export default function Minter() {
 			{!verified && !isLoading && !isLoadingToken && address && 
 			<div className="flex flex-col items-center justify-center p-4 self-center">
 				<IDKitWidget
-					action={action!}
-					app_id={appId!}
+					action={Constants.wldAction}
+					app_id={Constants.wldAppId}
 					onSuccess={()=>console.log("w")}
 					handleVerify={handleProof}
 					credential_types={[CredentialType.Orb]}
@@ -210,7 +210,7 @@ export default function Minter() {
 				{isMismatched && <div className="flex flex-col items-center justify-center p-4 self-center">
 					<button  
 						disabled={!isMismatched}
-						onClick={()=>switchNetwork(chainId)}
+						onClick={()=>switchNetwork(activeChain)}
 						className="bg-neutral-200 py-2 px-8 rounded-lg mx-4 items-center hover:bg-white">
 						<h1 className="font-bold text-black" >Switch to Optimism</h1>
 					</button>
