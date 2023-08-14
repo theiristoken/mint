@@ -27,10 +27,7 @@ export default function Home() {
 	},[address, start])
 
 	useEffect(()=>{
-		if (timeLeftStart<1000){
-			setTimeLeftStart(0)
-		  return;
-		}
+
 		const x = setInterval(()=>{
 		  setTimeLeftStart(timeLeftStart-1000)
 		}, 1000)

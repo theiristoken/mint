@@ -34,6 +34,8 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 	const tokenAddress = Constants.tokenAddress;
 	const { contract: tokenContract, isLoading: isLoadingToken } = useContract(tokenAddress);
 	const { data: tokenData, isLoading: isLoadingBalance } = useTokenBalance(tokenContract, address);
+	const start = Constants.start;
+	const testStart = Constants.testStart;
 
 	useEffect(() => {
 		const unsubscribeAuth = onAuthStateChanged(auth, async authenticatedUser => {
@@ -52,6 +54,10 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 		}
 	}, [address])
 
+	useEffect(()=>{
+		console.log(evaluate(-time))
+	}, [])
+
 	const formatTime = (num: number) =>{
 		const d = Math.floor(num/(24*3600*1000));
 		const h = Math.floor((num-d*24*3600*1000)/(3600*1000));
@@ -69,7 +75,7 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 		const p = 10262.502185213996;
 		const a = 3600*24;
 		const value = 1000 + 10000000*(Math.log((d/a)+p)/((d/a)+p));
-		return value.toLocaleString();
+		return value.toLocaleString("US");
 	};
 
 	useEffect(()=>{
@@ -268,8 +274,8 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 					<p className="flex flex-col items-center justify-center self-center text-md font-bold text-rose-500 mt-2">TiTs are on the Optimism chain.</p>
 				</div>}	
 
-				{!minted && !claimed && time==0 && !out && !isMismatched && !isClaiming && <div className="flex flex-col items-center justify-center p-4 self-center">
-					<p className="flex flex-col items-center justify-center self-center text-md text-center mt-4">You may claim {evaluate(Date.now()-time)}.</p>
+				{!minted && !claimed && time<=0 && !out && !isMismatched && !isClaiming && <div className="flex flex-col items-center justify-center p-4 self-center">
+					<p className="flex flex-col items-center justify-center self-center text-md text-center mt-4">You may claim {evaluate(-time)}.</p>
 					<button 
 						disabled={isLoadingToken || isMismatched || minted || isClaiming || time>=0}
 						onClick={onClaim} 
