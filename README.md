@@ -1,6 +1,6 @@
 # It's time to grab TiTs!
 
-The iris Token (TiT) is an ERC-20 token living on Optimism, a Layer-2 solution for the Ethereum blockchain. TiTs can only be signature minted by iris Verified Individuals (iVI).
+The iris Token (TiT) is an ERC-20 token living on Optimism, an EVM Layer-2. Only iris Verified Individuals (iVI) are able to signature mint TiTs.
 
 **Disclaimer: TiT relies on a third party to certify iris uniqueness. We do not collect, process, store or handle any biometric data.**
 
@@ -12,11 +12,11 @@ The maximum number of allowances is set to 1 million.
 
 Allowances start at 10,000 TiTs and decrease with time according to the following trend:
 
-$$TiT(t) =  1000+10000000\cdot\Large(\frac{\ln( \varDelta t+p)}{\varDelta t+p} )$$
+$$TiT(t) =  1000+10000000\cdot(\frac{\ln( \varDelta t+p)}{\varDelta t+p} )$$
 
 $$Where \enspace p=10262.502185213996,$$
 
-$$\varDelta t=t-t_{start}=\Large\frac{T-T_{start}}{86400}\normalsize,$$
+$$\varDelta t=t-t_{start}=\frac{T-T_{start}}{86400}\normalsize,$$
 
 $$T_{start}=1692100800000,$$
 
@@ -28,7 +28,7 @@ When an allowance claim is received from an iVI, a wallet specific signature is 
 
 - If the iVI chooses to pay for gas, they can mint their allowance immediately. 
 
-- If not, the signature is valid for a grace period of one week ($$\small 7\cdot 24\cdot 3600\cdot 1000\enspace milliseconds$$) to give iVIs ample time to source the gas fee if needed. After the grace period, if a claim hasn't been minted, the signature expires and the iVI loses both their spot in the queue and their locked in allowance amount. To be able to mint an allowance, they would ultimately have to submit another claim.
+- If not, the signature is valid for a grace period of one week (7 · 24 · 3600 · 1000 milliseconds) to give iVIs ample time to source the gas fee if needed. After the grace period, if a claim hasn't been minted, the signature expires and the iVI loses both their spot in the queue and their locked in allowance amount. To be able to mint an allowance, they would ultimately have to submit another claim.
 
 
 After all allowances are minted, admin rights are renounced to avoid the creation of additional TiTs by calling the setOwner() function of TiT Smart Contract and setting it to the null address. To simplify verification by TiT Holders and the general public, the corresponding transaction hash will be made available through TiT diffusion channels. **It is important to note that the setOwner() function may not be called during the planet Mercury's retrograde.**

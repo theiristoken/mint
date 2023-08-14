@@ -34,8 +34,6 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 	const tokenAddress = Constants.tokenAddress;
 	const { contract: tokenContract, isLoading: isLoadingToken } = useContract(tokenAddress);
 	const { data: tokenData, isLoading: isLoadingBalance } = useTokenBalance(tokenContract, address);
-	const start = Constants.start;
-	const testStart = Constants.testStart;
 
 	useEffect(() => {
 		const unsubscribeAuth = onAuthStateChanged(auth, async authenticatedUser => {
@@ -55,8 +53,8 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 	}, [address])
 
 	useEffect(()=>{
-		console.log(evaluate(-time))
-	}, [])
+		console.log(sig)
+	}, [sig])
 
 	const formatTime = (num: number) =>{
 		const d = Math.floor(num/(24*3600*1000));
@@ -119,6 +117,7 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 					const sig = JSON.parse(walletSnap.data().signature);
 					const amount = sig.payload.quantity;
 					const mintEnd = Number(sig.payload.mintEndTime.hex);
+					console.log("my sig", signature,"parsed", sig);
 					setSig(sig);
 					setAmount(Number(amount));
 					setMintEnd(mintEnd);
