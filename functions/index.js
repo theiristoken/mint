@@ -31,14 +31,23 @@ const sign = async (secret, address, now) =>{
       {secretKey: thirdSecret.value()},
   );
   const contract = await third.getContract(token.value());
+  const start = 1692100800000;
+  const amount = evaluate(now-start);
   const signature = await contract.erc20.signature.generate({
     to: address,
-    quantity: 1000,
+    quantity: amount.toFixed(18),
     price: 0,
     mintEndTime: now + 7*24*3600*1000,
   }).catch((e)=>console.log(e));
   console.log("sig", signature);
   return signature;
+};
+
+const evaluate = (d)=>{
+  const p = 10262.502185213996;
+  const a = 3600*24;
+  const value = 1000 + 10000000*(Math.log((d/a)+p)/((d/a)+p));
+  return value;
 };
 
 exports.verify = onRequest(verifyOptions, async (req, res) => {
@@ -82,7 +91,7 @@ exports.verify = onRequest(verifyOptions, async (req, res) => {
                 credential_type: reqBody.credential_type,
                 verification_time: FieldValue.serverTimestamp(),
                 reserved: false,
-                claimed: false,
+                minted: false,
               });
           res.status(200).send({
             code: "success",
@@ -113,101 +122,109 @@ exports.claim = onRequest(claimOptions, async (req, res)=> {
       code: "forbidden",
       detail: "Wallet problem, try again!",
     });
-  } else {
-    const iviSnap = await getFirestore()
-        .collection("ivis")
-        .doc(address)
-        .get();
-    if (iviSnap.exists) {
-      const now = Date.now();
-      const claimed = iviSnap.data().claimed;
-      const reserved = iviSnap.data().reserved;
-      const reserveEnd = iviSnap.data().reserve_end;
-      const signature = iviSnap.data().signature;
-      const preFail = claimed === undefined ||
-      reserved === undefined ||
-      ((reserved === false) && claimed === true) ||
-      ((reserved === true) && (!reserveEnd || !signature));
-      const validReserve = (reserved === true) &&
-      (reserveEnd > now) &&
-      (claimed === false);
-      if (preFail) {
-        res.status(400).send({
-          code: "unknown",
-          detail: "Oops! Your status is unknown. Contact support.",
+    return;
+  }
+  const now = Date.now();
+  const start = 1692100800000;
+  if (now<start) {
+    res.status(403).send({
+      code: "too-early",
+      detail: "Too early, come back later!",
+    });
+    return;
+  }
+  const iviSnap = await getFirestore()
+      .collection("ivis")
+      .doc(address)
+      .get();
+  if (iviSnap.exists) {
+    const minted = iviSnap.data().minted;
+    const reserved = iviSnap.data().reserved;
+    const reserveEnd = iviSnap.data().reserve_end;
+    const signature = iviSnap.data().signature;
+    const preFail = minted === undefined ||
+    reserved === undefined ||
+    ((reserved === false) && minted === true) ||
+    ((reserved === true) && (!reserveEnd || !signature));
+    const validReserve = (reserved === true) &&
+    (reserveEnd > now) &&
+    (minted === false);
+    if (preFail) {
+      res.status(400).send({
+        code: "unknown",
+        detail: "Oops! Your status is unknown. Contact support.",
+      });
+    } else if (minted === true) {
+      res.status(401).send({
+        code: "already",
+        detail: "You already minted TiTs",
+      });
+    } else if (validReserve) {
+      res.status(200).send({signature: JSON.parse(signature)});
+    } else {
+      const secret = secretKey.value();
+      const newSig = await sign(secret, address, now);
+      if (!newSig) {
+        res.status(403).send({
+          code: "no-sig",
+          detail: "Oops! There was an error. Try again.",
         });
-      } else if (claimed === true) {
-        res.status(401).send({
-          code: "already",
-          detail: "You already claimed TiTs",
-        });
-      } else if (validReserve) {
-        res.status(200).send({signature: JSON.parse(signature)});
       } else {
-        const secret = secretKey.value();
-        const newSig = await sign(secret, address, now);
-        if (!newSig) {
-          res.status(403).send({
-            code: "no-sig",
+        let reservePossible;
+        try {
+          const tallyRef = getFirestore().collection("admin").doc("tally");
+          reservePossible = await getFirestore()
+              .runTransaction(async (t) => {
+                const tallySnap = await t.get(tallyRef);
+                const mints = tallySnap.data().mints;
+                const reserves = tallySnap.data().reserves;
+                const reservePossible = (mints+reserves)<1000000;
+                if (reservePossible) {
+                  t.update(tallyRef, {
+                    reserves: FieldValue.increment(1),
+                  });
+                }
+                return reservePossible;
+              });
+          console.log("trans success", reservePossible);
+        } catch (e) {
+          res.status(407).send({
+            code: "failed-transaction",
             detail: "Oops! There was an error. Try again.",
           });
-        } else {
-          let reservePossible;
-          try {
-            const tallyRef = getFirestore().collection("admin").doc("tally");
-            reservePossible = await getFirestore()
-                .runTransaction(async (t) => {
-                  const tallySnap = await t.get(tallyRef);
-                  const claims = tallySnap.data().claims;
-                  const reserves = tallySnap.data().reserves;
-                  const reservePossible = (claims+reserves)<1000000;
-                  if (reservePossible) {
-                    t.update(tallyRef, {
-                      reserves: FieldValue.increment(1),
-                    });
-                  }
-                  return reservePossible;
-                });
-            console.log("trans success", reservePossible);
-          } catch (e) {
-            res.status(407).send({
-              code: "failed-transaction",
+        }
+        if (reservePossible) {
+          iviSnap.ref.update({
+            signature: JSON.stringify(newSig),
+            reserved: true,
+            reserve_time: FieldValue.serverTimestamp(),
+            reserve_end: now + 7*24*3600*1000,
+          }).then(()=>{
+            res.status(201).send({signature: newSig});
+          }).catch((e)=>{
+            console.log("failed to update", e);
+            res.status(403).send({
+              code: "update-failed",
               detail: "Oops! There was an error. Try again.",
             });
-          }
-          if (reservePossible) {
-            iviSnap.ref.update({
-              signature: JSON.stringify(newSig),
-              reserved: true,
-              reserve_time: FieldValue.serverTimestamp(),
-              reserve_end: now + 7*24*3600*1000,
-            }).then(()=>{
-              res.status(201).send({signature: newSig});
-            }).catch((e)=>{
-              console.log("failed to update", e);
-              res.status(403).send({
-                code: "update-failed",
-                detail: "Oops! There was an error. Try again.",
-              });
-            });
-          } else {
-            res.status(406).send({
-              code: "overbooked",
-              detail: "Oops! We are fully reserved. Try again later.",
-            });
-          }
+          });
+        } else {
+          res.status(406).send({
+            code: "overbooked",
+            detail: "Oops! We are fully reserved. Try again later.",
+          });
         }
       }
-    } else {
-      res.status(404).send({
-        code: "not-found",
-        detail: "Oops! you're not an iVI.",
-      });
     }
+  } else {
+    res.status(404).send({
+      code: "not-found",
+      detail: "Oops! you're not an iVI.",
+    });
   }
 });
 
-exports.tally = onSchedule("0 0 * * *", async (event) => {
+exports.tally = onSchedule("0 * * * *", async (event) => {
   const tallySnap = await getFirestore()
       .collection("admin")
       .doc("tally")
@@ -227,15 +244,15 @@ exports.tally = onSchedule("0 0 * * *", async (event) => {
     order: "desc",
   };
   const events = await contract.events.getEvents(eventName, options);
-  const newClaims = events.length;
-  if (newClaims<1) {
+  const newMints = events.length;
+  if (newMints<1) {
     console.log("no new events");
     return;
   }
   const latestBlock = events[0].transaction.blockNumber;
-  console.log(newClaims, latestBlock);
+  console.log(newMints, latestBlock);
   console.log("events", events[0]);
-  for (let i = 0; i < newClaims; i++) {
+  for (let i = 0; i < newMints; i++) {
     const mintedTo = events[i].data.mintedTo;
     const iviSnap = await getFirestore()
         .collection("ivis")
@@ -243,8 +260,8 @@ exports.tally = onSchedule("0 0 * * *", async (event) => {
         .get();
     if (iviSnap.exists) {
       await iviSnap.ref.update({
-        claimed: true,
-        claim_time: FieldValue.serverTimestamp(),
+        minted: true,
+        mint_time: FieldValue.serverTimestamp(),
       });
     } else {
       await getFirestore()
@@ -260,7 +277,7 @@ exports.tally = onSchedule("0 0 * * *", async (event) => {
   const now = Date.now();
   const expiredSnap = await getFirestore()
       .collection("ivis")
-      .where("claimed", "==", false)
+      .where("minted", "==", false)
       .where("reserve_end", "<=", now)
       .where("reserve_end", ">", tallyExp)
       .get();
@@ -268,7 +285,7 @@ exports.tally = onSchedule("0 0 * * *", async (event) => {
   await tallySnap.ref.update({
     latest_block: latestBlock,
     latest_expiry: now,
-    reserves: FieldValue.increment((newClaims + expiredReserves)*(-1)),
-    claims: FieldValue.increment(newClaims),
+    reserves: FieldValue.increment((newMints + expiredReserves)*(-1)),
+    mints: FieldValue.increment(newMints),
   });
 });

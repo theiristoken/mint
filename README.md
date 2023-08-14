@@ -1,18 +1,34 @@
 # It's time to grab TiTs!
 
-The iris Token (TiT for short) is an ERC-20 token on Optimism, a Layer-2 solution for the Ethereum blockchain. TiTs are fully decentralised and distributed to iris Verified Individuals (iVI) only.
+The iris Token (TiT) is an ERC-20 token living on Optimism, a Layer-2 solution for the Ethereum blockchain. TiTs can only be signature minted by iris Verified Individuals (iVI).
+
+**Disclaimer: TiT relies on a third party to certify iris uniqueness. We do not collect, process, store or handle any biometric data.**
 
 ## Genesis Offering
 
-TiTs are initially distributed as allowances consisting of 1,000 TiTs each. 
+100% of TiT supply consists of allowances ranging from 1,000 TiTs to 10,000 TiTs depending on the time they were claimed. The earlier the claim, the higher the amount of allowance. 
 
-The maximum number of allowances is set to 1 million. Therefore, the total max supply of TiTs is  1,000,000,000 TiTs. 
+The maximum number of allowances is set to 1 million. 
 
-100% of the allowances are distributed to unique iris Verified Indiviuals to ensure ultimate and certified decentralisation, as each iVI is a unique human by design.
+Allowances start at 10,000 TiTs and decrease with time according to the following trend:
 
-Allowances are distributed at no cost for the iVI besides gas fees. Although gas fees are low on Optimism, we provide - for iVIs in need - gas subsidies to ensure fair access to TiTs.
+$$TiT(t) =  1000+10000000\cdot\Large(\frac{\ln( \varDelta t+p)}{\varDelta t+p} )$$
 
-After the Genesis Offering is complete, admin/minter rights are revoked to avoid minting or creation of any additional TiTs. The corresponding transaction hashes will be made available to the public.
+$$Where \enspace p=10262.502185213996,$$
+
+$$\varDelta t=t-t_{start}=\Large\frac{T-T_{start}}{86400}\normalsize,$$
+
+$$T_{start}=1692100800000,$$
+
+$$and\enspace T\enspace is\enspace the\enspace current\enspace timestamp\enspace in\enspace milliseconds,$$
+
+Allowances are distributed at no cost to iVIs besides gas fees. Although gas fees are low on Optimism, we provide - for iVIs in need - gas subsidies to ensure fair access to TiTs.
+
+When an allowance claim is received from an iVI, a wallet specific signature is generated to allow the iVI to mint TiTs. The allowance is in "reserve" mode, which means the iVI secured a spot in the queue to mint. The mintable amount of TiTs is locked in at the time the claim is received. 
+
+- If the iVI chooses to pay for gas, they can mint their allowance immediately. 
+
+- If not, the signature is valid for a grace period of one week ($$\small 7\cdot 24\cdot 3600\cdot 1000\enspace milliseconds$$) to give iVIs ample time to source the gas fee if needed. After the grace period, if a claim hasn't been minted, the signature expires and the iVI loses both their spot in the queue and their locked in allowance amount. To be able to mint an allowance, they would ultimately have to submit another claim.
 
 
-** Disclaimer: iris verification is done through a third party. We do not collect, process, store or handle any personal or biometric data. **
+After all allowances are minted, admin rights are renounced to avoid the creation of additional TiTs by calling the setOwner() function of TiT Smart Contract and setting it to the null address. To simplify verification by TiT Holders and the general public, the corresponding transaction hash will be made available through TiT diffusion channels. **It is important to note that the setOwner() function may not be called during the planet Mercury's retrograde.**
