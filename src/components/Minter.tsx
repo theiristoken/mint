@@ -62,7 +62,7 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 
 	const formatDate = (num: number) =>{
 		const date = new Date(num);
-		return date.toDateString()+" "+date.toLocaleTimeString();
+		return date.toLocaleDateString()+" "+date.toLocaleTimeString();
 	}
 
 	const evaluate = (d:number)=>{
@@ -216,7 +216,7 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 	return (
 		<div className="flex flex-col items-center justify-center w-80 md:w-96">
 			{address && <div className="flex flex-row items-center justify-between w-full">
-				<p className="flex flex-col items-center justify-center self-center text-lg">{formatAddress(address)}</p>
+				<p className="flex flex-col items-center justify-center self-center text-lg font-bold italic">{formatAddress(address)}</p>
 				<button onClick={disconnect}>
 					<h1 className="py-4 self-center text-md font-bold hover:text-neutral-200">
 					(Disconnect)
@@ -278,20 +278,19 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 					</button>
 				</div>}	
 
-				{!minted && !claimed && time>=0 && !out && !isMismatched && !isClaiming && <div className="flex flex-col items-center justify-center p-4 self-center">
+				{!minted && !claimed && time>=0 && !out && !isMismatched && !isClaiming && <div className="flex flex-col items-center justify-center py-4 self-center">
 					<h1>Come back for TiTs {formatTime(time)}</h1>
 				</div>}	
 
-				{!minted && claimed && !out && mintEnd && sig && amount && !isMismatched && !isClaiming && <div className="flex flex-col items-center justify-center p-4 self-center">
-					<p className="text-md text-center mt-2">You secured your spot for an allowance of {amount.toLocaleString()} TiTs.</p>
-					<p className="text-md text-center my-4">You may mint it before <span className="italic">{formatDate(mintEnd)}</span>.</p>
+				{!minted && claimed && !out && mintEnd && sig && amount && !isMismatched && !isClaiming && <div className="flex flex-col items-center justify-center py-4 self-center">
+					<p className="text-md text-center mt-2">You have a reserved allowance of {amount.toLocaleString()} TiTs.</p>
+					<p className="text-md text-center my-2">You may mint for free before <span className="italic">{formatDate(mintEnd)}</span>.</p>
 					<button 
 						disabled={isLoadingToken || isMismatched || minted || isClaiming}
 						onClick={()=>onMint(sig)} 
 						className="bg-neutral-200 py-2 px-8 rounded-lg m-4 items-center hover:bg-white">
 						<h1 className="font-bold text-black">Mint {amount?.toLocaleString("US")} TiTs</h1>
 					</button>
-					<p className="flex flex-col items-center justify-center self-center text-md text-center mt-4">TiTs are free, but network gas isn't.</p>
 					<a className="font-bold hover:text-neutral-200 text-slate-600 " href="https://twitter.com/theiristoken" target="_blank">Need gas money?</a>
 				</div>}	
 

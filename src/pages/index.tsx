@@ -8,6 +8,7 @@ import Firebase from '@/firebase';
 import Ball from '@/components/Ball';
 import Loader from '@/components/Loader';
 import Out from '@/components/Out';
+import Constants from '@/constants';
 
 export default function Home() {
 	const address = useAddress();
@@ -15,7 +16,7 @@ export default function Home() {
 	const [ isLoading, setIsLoading ] = useState(true);
 	const [ out, setOut ] = useState(false);
 	const db = getFirestore(Firebase);
-	const start = 1692100800000;
+	const start = Constants.testStart;
 	const now = Date.now();
 	const [timeLeftStart, setTimeLeftStart] = useState(start-now);
 

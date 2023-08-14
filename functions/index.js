@@ -23,6 +23,8 @@ const claimOptions = {
   cors: [/theiristoken\.com$/, /theiristoken\.web\.app$/, "http://localhost:3000"],
   secrets: [secretKey],
 };
+const testStart = 1691150400000;
+// const start = 1692100800000;
 
 const sign = async (secret, address, now) =>{
   const third = ThirdwebSDK.fromPrivateKey(
@@ -31,8 +33,7 @@ const sign = async (secret, address, now) =>{
       {secretKey: thirdSecret.value()},
   );
   const contract = await third.getContract(token.value());
-  const start = 1692100800000;
-  const amount = evaluate(now-start);
+  const amount = evaluate(now-testStart);
   const signature = await contract.erc20.signature.generate({
     to: address,
     quantity: amount.toFixed(18),
@@ -125,8 +126,7 @@ exports.claim = onRequest(claimOptions, async (req, res)=> {
     return;
   }
   const now = Date.now();
-  const start = 1692100800000;
-  if (now<start) {
+  if (now<testStart) {
     res.status(403).send({
       code: "too-early",
       detail: "Too early, come back later!",

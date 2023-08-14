@@ -6,6 +6,8 @@ const Constants = {
     wldAction: "ivi",
     verifyEndpoint: "https://verify-4zesiwb32a-uc.a.run.app",
     claimEndpoint: "https://claim-4zesiwb32a-uc.a.run.app",
+    start: 1692100800000,
+    testStart: 1691150400000,
 }
 
 export default Constants;
