@@ -69,7 +69,7 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 		const p = 10262.502185213996;
 		const a = 3600*24;
 		const value = 1000 + 10000000*(Math.log((d/a)+p)/((d/a)+p));
-		return value;
+		return value.toLocaleString();
 	};
 
 	useEffect(()=>{
@@ -269,11 +269,11 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 				</div>}	
 
 				{!minted && !claimed && time==0 && !out && !isMismatched && !isClaiming && <div className="flex flex-col items-center justify-center p-4 self-center">
-					<p className="flex flex-col items-center justify-center self-center text-md text-center mt-4">You may claim {evaluate(Date.now())}.</p>
+					<p className="flex flex-col items-center justify-center self-center text-md text-center mt-4">You may claim {evaluate(Date.now()-time)}.</p>
 					<button 
 						disabled={isLoadingToken || isMismatched || minted || isClaiming || time>=0}
 						onClick={onClaim} 
-						className="bg-neutral-200 py-2 px-8 rounded-lg mx-4 items-center hover:bg-white">
+						className="bg-neutral-200 py-2 px-8 rounded-lg m-4 items-center hover:bg-white">
 						<h1 className="font-bold text-black" >Claim TiTs</h1>
 					</button>
 				</div>}	

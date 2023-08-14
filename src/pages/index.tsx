@@ -7,7 +7,6 @@ import {doc, getDoc, getFirestore} from 'firebase/firestore';
 import Firebase from '@/firebase';
 import Ball from '@/components/Ball';
 import Loader from '@/components/Loader';
-import Out from '@/components/Out';
 import Constants from '@/constants';
 
 export default function Home() {
