@@ -268,7 +268,7 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 					<p className="flex flex-col items-center justify-center self-center text-md font-bold text-rose-500 mt-2">TiTs are on the Optimism chain.</p>
 				</div>}	
 
-				{!minted && !claimed && time<0 && !out && !isMismatched && !isClaiming && <div className="flex flex-col items-center justify-center p-4 self-center">
+				{!minted && !claimed && time==0 && !out && !isMismatched && !isClaiming && <div className="flex flex-col items-center justify-center p-4 self-center">
 					<p className="flex flex-col items-center justify-center self-center text-md text-center mt-4">You may claim {evaluate(Date.now())}.</p>
 					<button 
 						disabled={isLoadingToken || isMismatched || minted || isClaiming || time>=0}
@@ -278,7 +278,7 @@ export default function Minter({time, out}: {time: number, out: boolean}) {
 					</button>
 				</div>}	
 
-				{!minted && !claimed && time>=0 && !out && !isMismatched && !isClaiming && <div className="flex flex-col items-center justify-center py-4 self-center">
+				{!minted && !claimed && time>0 && !out && !isMismatched && !isClaiming && <div className="flex flex-col items-center justify-center py-4 self-center">
 					<h1>Come back for TiTs {formatTime(time)}</h1>
 				</div>}	
 
