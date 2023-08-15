@@ -1,6 +1,6 @@
 # It's time to grab TiTs!
 
-The iris Token (TiT) is an ERC-20, living on Optimism, that can only be signature minted by iris Verified Individuals (iVI).
+The iris Token (TiT) is an ERC-20 living on Optimism. To mint TiTs, on must be an iris Verified Individual (iVI).
 
 **Disclaimer: TiT relies on third parties to perform iris Verification. We do not collect, process or store any biometric data.**
 
@@ -18,7 +18,7 @@ $$Where \enspace p=10262.502185213996,$$
 
 $$\varDelta t=t-t_{start}=\frac{T-T_{start}}{86400}\normalsize,$$
 
-$$T_{start}=1692122400000,$$
+$$T_{start}=1692360000000,$$
 
 $$and\enspace T\enspace is\enspace the\enspace current\enspace timestamp\enspace in\enspace milliseconds,$$
 

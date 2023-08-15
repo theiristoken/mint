@@ -124,13 +124,13 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 						className="bg-neutral-200 py-2 px-8 rounded-lg mx-4 items-center hover:bg-white">
 						<h1 className="font-bold text-black" >Switch to Optimism</h1>
 					</button>
-					<p className="text-md font-bold text-rose-500 my-2">TiTs live on the Optimism</p>
+					<p className="text-md font-bold text-rose-500 my-2">TiTs live on the Optimism chain</p>
 				</div>}	
 
 				{!isMismatched && amount && sig && reserveEnd && <div className="flex flex-col items-center justify-center">
 					<p className="my-2 text-md text-center">You reserved an allowance of <span className="font-bold"> {amount.toLocaleString()} </span>TiTs.</p>
-					{time<0 && <p className="text-md text-center my-2">You can mint it for free before <span className="italic font-bold">{formatDate(reserveEnd)}</span>.</p>}
-					{time>0 && <p className="text-md text-center my-2">You can mint it for free between 
+					{time<0 && <p className="text-md text-center my-2">You may mint it for free before <span className="italic font-bold">{formatDate(reserveEnd)}</span>.</p>}
+					{time>0 && <p className="text-md text-center my-2">You may mint it for free between 
 						<span className="italic font-bold"> {formatDate(Constants.start)} </span> 
 						 and
 						<span className="italic font-bold"> {formatDate(reserveEnd)}</span>.
