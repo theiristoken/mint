@@ -24,7 +24,7 @@ const claimOptions = {
   secrets: [secretKey],
 };
 const testStart = 1691150400000;
-// const start = 1692100800000;
+// const start = 1692122400000;
 
 const sign = async (secret, address, now) =>{
   const third = ThirdwebSDK.fromPrivateKey(
@@ -33,22 +33,31 @@ const sign = async (secret, address, now) =>{
       {secretKey: thirdSecret.value()},
   );
   const contract = await third.getContract(token.value());
-  const amount = evaluate(now-testStart);
+  const d = now-testStart;
+  const amount = evaluate(d);
+  const week = 7*24*3600*1000;
+  const startMint = d>0? now: testStart;
+  const endMint = d>0? (now+week): (testStart+week);
+  console.log(amount);
   const signature = await contract.erc20.signature.generate({
     to: address,
-    quantity: amount.toFixed(18),
+    quantity: amount,
     price: 0,
-    mintEndTime: now + 7*24*3600*1000,
+    mintStartTime: startMint,
+    mintEndTime: endMint,
   }).catch((e)=>console.log(e));
-  console.log("sig", signature);
   return signature;
 };
 
 const evaluate = (d)=>{
-  const p = 10262.502185213996;
-  const a = 3600*24;
-  const value = 1000 + 10000000*(Math.log((d/a)+p)/((d/a)+p));
-  return value;
+  if (d>0) {
+    const p = 10262.502185213996;
+    const a = 3600*24;
+    const value = 1000 + 10000000*(Math.log((d/a)+p)/((d/a)+p));
+    return value;
+  } else {
+    return 10000;
+  }
 };
 
 exports.verify = onRequest(verifyOptions, async (req, res) => {
@@ -125,19 +134,12 @@ exports.claim = onRequest(claimOptions, async (req, res)=> {
     });
     return;
   }
-  const now = Date.now();
-  if (now<testStart) {
-    res.status(403).send({
-      code: "too-early",
-      detail: "Too early, come back later!",
-    });
-    return;
-  }
   const iviSnap = await getFirestore()
       .collection("ivis")
       .doc(address)
       .get();
   if (iviSnap.exists) {
+    const now = Date.now();
     const minted = iviSnap.data().minted;
     const reserved = iviSnap.data().reserved;
     const reserveEnd = iviSnap.data().reserve_end;
@@ -160,7 +162,11 @@ exports.claim = onRequest(claimOptions, async (req, res)=> {
         detail: "You already minted TiTs",
       });
     } else if (validReserve) {
-      res.status(200).send({signature: JSON.parse(signature)});
+      res.status(200).send({
+        amount: iviSnap.data().amount,
+        reserve_end: iviSnap.data().reserve_end,
+        signature: JSON.parse(JSON.stringify(signature)),
+      });
     } else {
       const secret = secretKey.value();
       const newSig = await sign(secret, address, now);
@@ -194,13 +200,21 @@ exports.claim = onRequest(claimOptions, async (req, res)=> {
           });
         }
         if (reservePossible) {
+          console.log(newSig, "string", JSON.stringify(newSig));
+          const amount = Number(newSig.payload.quantity);
+          const reserveEnd = now + 7*24*3600*1000;
           iviSnap.ref.update({
-            signature: JSON.stringify(newSig),
+            amount: amount,
+            signature: JSON.parse(JSON.stringify(newSig)),
             reserved: true,
             reserve_time: FieldValue.serverTimestamp(),
-            reserve_end: now + 7*24*3600*1000,
+            reserve_end: reserveEnd,
           }).then(()=>{
-            res.status(201).send({signature: newSig});
+            res.status(201).send({
+              amount: amount,
+              reserveEnd: reserveEnd,
+              signature: JSON.parse(JSON.stringify(newSig)),
+            });
           }).catch((e)=>{
             console.log("failed to update", e);
             res.status(403).send({
