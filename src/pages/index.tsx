@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import Title from "@/components/Title";
 import GetStarted from "@/components/GetStarted";
-import {useAddress} from "@thirdweb-dev/react";
+import {ConnectWallet, useAddress} from "@thirdweb-dev/react";
 import {doc, getDoc, getFirestore} from 'firebase/firestore';
 import Firebase from '@/firebase';
 import Ball from '@/components/Ball';
@@ -59,6 +59,9 @@ export default function Home() {
 			</div>}
 			{!isLoading && !address && <GetStarted time={timeLeftStart} out={out}/>}
 			{!isLoading && address && <In time={timeLeftStart} out={out} address={address}/>}
+			{!address && <div className="my-4 self-center">
+				<ConnectWallet btnTitle="Get Started" className="hover:bg-white rounded-lg" style={{fontWeight:'bold', fontSize:'large'}}/>
+			</div>}
 		</div>
 	);
 }
