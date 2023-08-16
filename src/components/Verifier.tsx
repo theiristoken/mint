@@ -14,6 +14,13 @@ export default function Verifier({time, out, address, _verified, _claimed, _mint
 		setVerified(_verified);
 	}, [_verified])
 
+	const evaluate = (d:number)=>{
+		const p = 10262.502185213996;
+		const a = 3600*24;
+		const value = 1000 + 10000000*(Math.log((d/a)+p)/((d/a)+p));
+		return Number(value.toFixed(3)).toLocaleString("US");
+	};
+
 	const handleProof = async (result: ISuccessResult) => {
 		setErrorShown(false);
 		const reqBody = {
@@ -62,6 +69,7 @@ export default function Verifier({time, out, address, _verified, _claimed, _mint
 						</button>
 					}
 				</IDKitWidget>
+				<p className="text-md text-center my-2">You may have access to an allowance of <span className="font-bold"> {time>=0?(10000).toLocaleString("US"):evaluate(-time)} </span>TiTs.</p>
 				{errorShown && <div className="flex flex-col items-center justify-center px-2 self-center">
 					<p className="my-2 text-md font-bold text-rose-500">{errorDetail}</p>
 				</div>}
