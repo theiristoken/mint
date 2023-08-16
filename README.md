@@ -20,7 +20,7 @@ $$\varDelta t=t-t_{start}=\frac{T-T_{start}}{86400}\normalsize,$$
 
 $$T_{start}=1692360000000,$$
 
-$$and\enspace T\enspace is\enspace the\enspace current\enspace timestamp\enspace in\enspace milliseconds,$$
+$$and\enspace T\enspace the\enspace current\enspace timestamp\enspace in\enspace milliseconds,$$
 
 
 
