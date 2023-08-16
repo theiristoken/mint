@@ -20,11 +20,11 @@ export default function Home() {
 	const [timeLeftStart, setTimeLeftStart] = useState(start-now);
 
 	useEffect(()=>{
-		if (address && start<now){
+		if (address){
 			getClaims();
 		}
-		setIsLoading(false);
-	},[address, start])
+		setTimeout(()=>setIsLoading(false), 500)
+	},[address])
 
 	useEffect(()=>{
 		const x = setInterval(()=>{

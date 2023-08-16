@@ -8,9 +8,9 @@ import Verifier from "./Verifier";
 
 export default function In({time, out, address}: {time: number, out: boolean, address: string}) {
 	const [user, setUser] = useState<User| null>(null);
-	const [ verified, setVerified ] = useState(false);
-	const [ claimed, setClaimed ] = useState(false);
-	const [ minted, setMinted ] = useState(false);
+	const [ verified, setVerified ] = useState<boolean>();
+	const [ claimed, setClaimed ] = useState<boolean>();
+	const [ minted, setMinted ] = useState<boolean>();
 	const [ amount, setAmount ] = useState<number>();
 	const [ reserveEnd, setReserveEnd ] = useState<number>();
 	const [ sig, setSig ] = useState<SignedPayload20>();
@@ -100,7 +100,11 @@ export default function In({time, out, address}: {time: number, out: boolean, ad
 				</button>	
 			</div>
 			{isLoading  && <Loader/>}
-			{!isLoading && <Verifier 
+			{!isLoading && 
+			verified!== undefined &&
+			claimed!== undefined &&
+			minted!== undefined &&
+			 <Verifier 
 				time={time} 
 				out={out} 
 				address={address} 
