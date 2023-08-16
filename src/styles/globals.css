@@ -104,9 +104,6 @@ transform: rotateX(90deg) translateZ(-150px);
   align-self: center;
 }
 body {
-  margin: 20px auto;
-  background: white;
-  background-repeat: no-repeat;
   font-family: 'Cairo Play';
 }
   
