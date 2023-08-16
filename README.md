@@ -6,7 +6,7 @@ The iris Token (TiT) is an ERC-20 living on Optimism. To mint TiTs, on must be a
 
 ## Genesis Offering
 
-100% of TiT supply consists of allowances ranging from 1,000 TiTs to 10,000 TiTs depending on the time they were claimed. The earlier an iVI submits a claim, the higher the amount of the allowance. 
+100% of TiT supply consists of allowances ranging from ≈1,000 TiTs to 10,000 TiTs depending on the time they were claimed. The earlier an iVI submits a claim, the higher the amount of the allowance. 
 
 The maximum number of allowances is set to 1 million. 
 
