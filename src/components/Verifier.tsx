@@ -16,10 +16,6 @@ export default function Verifier({time, out, address, _verified, _claimed, _mint
 
 	const handleProof = async (result: ISuccessResult) => {
 		setErrorShown(false);
-		if(!verifyEndpoint){
-			return;
-		}
-		console.log("Proof received from IDKit:\n", JSON.stringify(result));
 		const reqBody = {
 			merkle_root: result.merkle_root,
 			nullifier_hash: result.nullifier_hash,
@@ -28,7 +24,6 @@ export default function Verifier({time, out, address, _verified, _claimed, _mint
 			action: Constants.wldAction,
 			signal: address?? "noaddress",
 		};
-		console.log("Sending proof to backend for verification:\n", JSON.stringify(reqBody));
 		const res: Response = await fetch(verifyEndpoint, {
 			method: "POST",
 			headers: {
@@ -40,7 +35,6 @@ export default function Verifier({time, out, address, _verified, _claimed, _mint
 		if(res.status == 200 || res.status == 201){
 			setVerified(true);
 			localStorage.setItem('verified'+address, Date.now().toString());
-			console.log(data);
 		} else {
 			setErrorShown(true);
 			setErrorDetail("Oops! Your iris is not verified. Try again");

@@ -58,15 +58,11 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 		const data = await res.json();
 		if(res.status == 200 || res.status == 201){
 			localStorage.setItem('claimed'+address, Date.now().toString());
-			const signature = data.signature;
-			console.log("from server",signature);
 			setSig(data.signature);
 			setAmount(data.amount);
-			console.log("quantity", amount);
 			setIsClaiming(false);
 			setClaimed(true);
 			setReserveEnd(data.reserveEnd)
-			
 		} else {
 			setIsClaiming(false);
 			setErrorShown(true);
@@ -78,27 +74,18 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 	const onMint = async (sig: SignedPayload20)=>{
 		setIsMinting(true);
 		setErrorShown(false);
-		if(!sig){
-			setIsMinting(false);
-			return;
-		}
-
-		tokenContract?.erc20.signature.mint.prepare(sig).then((tx)=>console.log(tx))
-
 		tokenContract?.erc20.signature.mint(sig)
-			.then((tx)=>{
-				localStorage.setItem('minted'+address, Date.now().toString());
-				setMinted(true);
-				setNewMint(true);
-				console.log('minted TiTs', tx);
-				setIsMinting(false);
-			}).catch((e)=>{
-				console.log("lk");
-				console.log(e,sig);
-				setErrorShown(true);
-				setErrorDetail(e.reason?formatError(e.reason):"");
-				setIsMinting(false);
-			});
+		.then((tx)=>{
+			localStorage.setItem('minted'+address, Date.now().toString());
+			setMinted(true);
+			setNewMint(true);
+			setIsMinting(false);
+		}).catch((e)=>{
+			console.log(e);
+			setErrorShown(true);
+			setErrorDetail(e.reason?formatError(e.reason):"");
+			setIsMinting(false);
+		});
 	}
 
 	return (

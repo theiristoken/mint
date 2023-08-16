@@ -38,7 +38,6 @@ const sign = async (secret, address, now) =>{
   const week = 7*24*3600*1000;
   const startMint = d>0? new Date(now): new Date(start);
   const endMint = d>0? new Date(now+week): new Date(start+week);
-  console.log(amount);
   const signature = await contract.erc20.signature.generate({
     to: address,
     quantity: amount,
@@ -61,7 +60,6 @@ const evaluate = (d)=>{
 };
 
 exports.verify = onRequest(verifyOptions, async (req, res) => {
-  console.log("body", req.body, "proof babes", req.body.proof);
   const reqBody = {
     nullifier_hash: req.body.nullifier_hash,
     merkle_root: req.body.merkle_root,
@@ -71,7 +69,6 @@ exports.verify = onRequest(verifyOptions, async (req, res) => {
     signal: req.body.signal,
   };
   logger.info("Sending request to World ID /verify endpoint:\n", reqBody);
-  logger.info("verification endpoint\n", verifyEndpoint);
   fetch(verifyEndpoint, {
     method: "POST",
     headers: {
@@ -196,7 +193,6 @@ exports.claim = onRequest(claimOptions, async (req, res)=> {
           });
         }
         if (reservePossible) {
-          console.log(newSig, "string", JSON.stringify(newSig));
           const amount = Number(newSig.payload.quantity);
           const reserveEnd = now + 7*24*3600*1000;
           iviSnap.ref.update({
@@ -234,14 +230,13 @@ exports.claim = onRequest(claimOptions, async (req, res)=> {
   }
 });
 
-exports.tally = onSchedule("0 * * * *", async (event) => {
+exports.tally = onSchedule("0 0 * * *", async (event) => {
   const tallySnap = await getFirestore()
       .collection("admin")
       .doc("tally")
       .get();
   const tallyBlock = tallySnap.data().latest_block;
   const tallyExp = tallySnap.data().latest_expiry;
-  console.log(tallyBlock, tallyExp);
   const readOnly = new ThirdwebSDK(
       chain.value(),
       {secretKey: thirdSecret.value()},
@@ -260,8 +255,6 @@ exports.tally = onSchedule("0 * * * *", async (event) => {
     return;
   }
   const latestBlock = events[0].transaction.blockNumber;
-  console.log(newMints, latestBlock);
-  console.log("events", events[0]);
   for (let i = 0; i < newMints; i++) {
     const mintedTo = events[i].data.mintedTo;
     const mintBlock = events[i].transaction.blockNumber;
@@ -273,7 +266,7 @@ exports.tally = onSchedule("0 * * * *", async (event) => {
       await iviSnap.ref.update({
         minted: true,
         mint_block: mintBlock,
-        tally_time: FieldValue.serverTimestamp(),
+        mint_tally: FieldValue.serverTimestamp(),
       });
     } else {
       await getFirestore()
