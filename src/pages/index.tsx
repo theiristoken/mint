@@ -1,13 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import Title from "@/components/Title";
 import GetStarted from "@/components/GetStarted";
-import {ConnectWallet, useAddress} from "@thirdweb-dev/react";
+import {useAddress} from "@thirdweb-dev/react";
 import {doc, getDoc, getFirestore} from 'firebase/firestore';
 import Firebase from '@/firebase';
-import Ball from '@/components/Ball';
 import Loader from '@/components/Loader';
 import Constants from '@/constants';
 import In from '@/components/In';
+import EyeBall from '@/components/EyeBall';
 
 export default function Home() {
 	const address = useAddress();
@@ -48,7 +48,7 @@ export default function Home() {
 	return (
 		<div className="flex flex-col justify-center items-center">
 			<Title/>
-			<Ball/>
+			<EyeBall/>
 			{isLoading && <Loader/>}
 			{!isLoading && claims>=1000 && <div className="flex flex-row items-center justify-center">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5 stroke-amber-500 hover:fill-white mr-1">
