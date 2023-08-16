@@ -48,7 +48,7 @@ export default function Home() {
 	return (
 		<div className="flex flex-col justify-center items-center">
 			<Title/>
-			<Ball/>
+			{/* <Ball/> */}
 			{isLoading && <Loader/>}
 			{!isLoading && claims>=1000 && <div className="flex flex-row items-center justify-center">
 				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-5 h-5 stroke-amber-500 hover:fill-white mr-1">
