@@ -125,12 +125,12 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 						 and
 						<span className="italic font-bold"> {formatDate(reserveEnd)}</span>.
 					</p>}
-					<button 
+					{time<0 && <button 
 						disabled={isLoadingToken || isMismatched || minted || isClaiming || isMinting }
 						onClick={()=>onMint(sig)} 
 						className="bg-neutral-200 py-2 px-8 rounded-lg m-4 items-center hover:bg-white disabled:opacity-30">
 						<h1 className="font-bold text-black">Grab TiT Allowance</h1>
-					</button>
+					</button>}
 					<a className="font-bold hover:text-neutral-200 text-slate-600 " href="https://twitter.com/theiristoken/status/1691796058781761812" target="_blank">Need gas money?</a>
 				</div>}	
 			</div>}
