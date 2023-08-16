@@ -59,9 +59,6 @@ export default function Home() {
 			</div>}
 			{!isLoading && !address && <GetStarted time={timeLeftStart} out={out}/>}
 			{!isLoading && address && <In time={timeLeftStart} out={out} address={address}/>}
-			{!address && <div className="my-4 self-center">
-				<ConnectWallet btnTitle="Get Started" className="hover:bg-white rounded-lg" style={{fontWeight:'bold', fontSize:'large'}}/>
-			</div>}
 		</div>
 	);
 }
