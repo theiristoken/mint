@@ -31,7 +31,7 @@ export default function GetStarted({time, out}: {time: number, out: boolean}) {
 				</h1>	
 			</div>}
 			
-			<div className="p-4 m-4 rounded-lg flex bg-gradient-to-r from-slate-100 to-slate-200 text-lg text-center">
+			<div className="p-4 m-4 rounded-lg flex bg-gradient-to-b from-slate-100 to-slate-200 text-lg text-center">
 				<div>
 					<h1 className="font-bold">Connect your wallet</h1>
 					<p>You may use a compatible cryptocurrency wallet such as 
@@ -41,7 +41,7 @@ export default function GetStarted({time, out}: {time: number, out: boolean}) {
 				</div>
 			</div>
 
-			<div className="p-4 m-4 rounded-lg flex bg-gradient-to-r from-slate-100 to-slate-200 text-lg text-center">
+			<div className="p-4 m-4 rounded-lg flex bg-gradient-to-b from-slate-100 to-slate-200 text-lg text-center">
 				<div>
 					<h1 className="font-bold">Verify your iris</h1>
 					<p>You may use the iris uniqueness attestation provided by a
@@ -49,7 +49,7 @@ export default function GetStarted({time, out}: {time: number, out: boolean}) {
 						.</p>
 				</div>
 			</div>
-			<div className="p-4 m-4 rounded-lg flex bg-gradient-to-r from-slate-100 to-slate-200 text-lg text-center">
+			<div className="p-4 m-4 rounded-lg flex bg-gradient-to-b from-slate-100 to-slate-200 text-lg text-center">
 				<div>
 					<h1 className="font-bold">Claim your allowance</h1>
 					<p>If you make it in time, you may take hold of  {time<=0?evaluate(-time):(10000).toLocaleString("US")} TiTs.</p>
@@ -57,7 +57,7 @@ export default function GetStarted({time, out}: {time: number, out: boolean}) {
 			</div>
 			
 			<div className="mt-4 mb-8 self-center z-10">
-				<ConnectWallet btnTitle="Get Started" className="hover:bg-white rounded-lg" style={{fontWeight:'bold', fontSize:'x-large'}}/>
+				<ConnectWallet btnTitle="Get Started" className="hover:bg-white rounded-lg" style={{fontWeight:'bold', fontSize:'large'}}/>
 			</div>
 		</div>
 	);
