@@ -96,7 +96,7 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 			<div className="flex flex-col items-center justify-center">
 				<p className="text-md text-center my-2">You can currently reserve an allowance of <span className="font-bold"> {time>=0?(10000).toLocaleString("US"):evaluate(-time)} </span>TiTs.</p>
 				<button 
-					disabled={isLoadingToken || isMismatched || minted || isClaiming || isMinting}
+					disabled={isLoadingToken || minted || isClaiming || isMinting}
 					onClick={onClaim} 
 					className="bg-neutral-200 py-2 px-8 rounded-lg m-4 items-center hover:bg-white">
 					<h1 className="font-bold text-black">Claim TiT Allowance</h1>
