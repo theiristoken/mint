@@ -5,7 +5,6 @@ import { User, getAuth, onAuthStateChanged, signInAnonymously } from 'firebase/a
 import { doc, getDoc, getFirestore } from "firebase/firestore";
 import Loader from "./Loader";
 import Verifier from "./Verifier";
-import Claimer from "./Claimer";
 
 export default function In({time, out, address}: {time: number, out: boolean, address: string}) {
 	const [user, setUser] = useState<User| null>(null);
@@ -38,6 +37,10 @@ export default function In({time, out, address}: {time: number, out: boolean, ad
 	}, [address])
 
 	useEffect(()=>{
+		console.log("in",verified);
+	}, [verified])
+
+	useEffect(()=>{
 		if(user && address) {
 			fetchWalletInfo(address);
 		}
@@ -51,9 +54,9 @@ export default function In({time, out, address}: {time: number, out: boolean, ad
 		setIsLoading(true);
 		const localMinted = localStorage.getItem('minted'+address);
 		const localClaimed = localStorage.getItem('claimed'+address);
-		const localVerfied = localStorage.getItem('verified'+address);
-		const preCondition = localMinted && localVerfied && localClaimed && 
-		localMinted==address && localVerfied==address && localClaimed==address;
+		const localVerified = localStorage.getItem('verified'+address);
+		console.log(localMinted, localVerified, localClaimed)
+		const preCondition = localMinted && localVerified && localClaimed;
 		if (preCondition){
 			setMinted(true);
 			setClaimed(true);

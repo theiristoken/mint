@@ -1,4 +1,4 @@
-import { SignedPayload20, useContract, useNetworkMismatch, useSwitchChain, useTokenBalance } from "@thirdweb-dev/react";
+import { Erc20, SignedPayload20, useContract, useNetworkMismatch, useSwitchChain, useTokenBalance } from "@thirdweb-dev/react";
 import { useState } from "react";
 import Constants from "@/constants";
 import Loader from "./Loader";
@@ -32,7 +32,7 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 		const p = 10262.502185213996;
 		const a = 3600*24;
 		const value = 1000 + 10000000*(Math.log((d/a)+p)/((d/a)+p));
-		return value.toLocaleString("US");
+		return Number(value.toFixed(3)).toLocaleString("US");
 	};
 
 	const formatError = (str:string) => {
@@ -57,6 +57,7 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 		console.log(res);
 		const data = await res.json();
 		if(res.status == 200 || res.status == 201){
+			localStorage.setItem('claimed'+address, Date.now().toString());
 			const signature = data.signature;
 			console.log("from server",signature);
 			setSig(data.signature);
@@ -65,7 +66,7 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 			setIsClaiming(false);
 			setClaimed(true);
 			setReserveEnd(data.reserveEnd)
-			localStorage.setItem('claimed'+address, Date.now().toString());
+			
 		} else {
 			setIsClaiming(false);
 			setErrorShown(true);
@@ -81,6 +82,8 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 			setIsMinting(false);
 			return;
 		}
+
+		tokenContract?.erc20.signature.mint.prepare(sig).then((tx)=>console.log(tx))
 
 		tokenContract?.erc20.signature.mint(sig)
 			.then((tx)=>{
@@ -114,7 +117,7 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 			</div>}
 			{!claimed && !minted && out && <Out/>}
 
-			{claimed && !minted && !isClaiming && !isMinting && !isLoadingToken &&
+			{claimed && !minted && !isClaiming && !isMinting && !isLoadingToken && !isLoadingBalance &&
 			<div className="flex flex-col items-center justify-center">
 				
 				{isMismatched && <div className="flex flex-col items-center justify-center">
@@ -136,7 +139,7 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 						<span className="italic font-bold"> {formatDate(reserveEnd)}</span>.
 					</p>}
 					<button 
-						disabled={isLoadingToken || isMismatched || minted || isClaiming || isMinting || time>0}
+						disabled={isLoadingToken || isMismatched || minted || isClaiming || isMinting }
 						onClick={()=>onMint(sig)} 
 						className="bg-neutral-200 py-2 px-8 rounded-lg m-4 items-center hover:bg-white disabled:opacity-30">
 						<h1 className="font-bold text-black">Grab TiT Allowance</h1>

@@ -1,6 +1,6 @@
 import Constants from "@/constants";
 import { CredentialType, IDKitWidget, ISuccessResult } from "@worldcoin/idkit";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Claimer from "./Claimer";
 import { SignedPayload20 } from "@thirdweb-dev/sdk";
 
@@ -9,6 +9,10 @@ export default function Verifier({time, out, address, _verified, _claimed, _mint
 	const [ errorShown, setErrorShown ] = useState(false);
 	const [ errorDetail, setErrorDetail ] = useState("");
 	const verifyEndpoint = Constants.verifyEndpoint;
+
+	useEffect(()=>{
+		setVerified(_verified);
+	}, [_verified])
 
 	const handleProof = async (result: ISuccessResult) => {
 		setErrorShown(false);
@@ -35,7 +39,7 @@ export default function Verifier({time, out, address, _verified, _claimed, _mint
 		const data = await res.json();
 		if(res.status == 200 || res.status == 201){
 			setVerified(true);
-			localStorage.setItem('ivi'+address, Date.now().toString());
+			localStorage.setItem('verified'+address, Date.now().toString());
 			console.log(data);
 		} else {
 			setErrorShown(true);

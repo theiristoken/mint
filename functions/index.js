@@ -23,8 +23,8 @@ const claimOptions = {
   cors: [/theiristoken\.com$/, /theiristoken\.web\.app$/, "http://localhost:3000"],
   secrets: [secretKey],
 };
-const testStart = 1691150400000;
-// const start = 1692122400000;
+
+const start = 1692360000000;
 
 const sign = async (secret, address, now) =>{
   const third = ThirdwebSDK.fromPrivateKey(
@@ -33,11 +33,11 @@ const sign = async (secret, address, now) =>{
       {secretKey: thirdSecret.value()},
   );
   const contract = await third.getContract(token.value());
-  const d = now-testStart;
+  const d = now-start;
   const amount = evaluate(d);
   const week = 7*24*3600*1000;
-  const startMint = d>0? now: testStart;
-  const endMint = d>0? (now+week): (testStart+week);
+  const startMint = d>0? new Date(now): new Date(start);
+  const endMint = d>0? new Date(now+week): new Date(start+week);
   console.log(amount);
   const signature = await contract.erc20.signature.generate({
     to: address,
@@ -94,11 +94,7 @@ exports.verify = onRequest(verifyOptions, async (req, res) => {
               .collection("ivis")
               .doc(reqBody.signal)
               .set({
-                wallet: reqBody.signal,
-                nullifier_hash: reqBody.nullifier_hash,
-                merkle_root: reqBody.merkle_root,
-                proof: reqBody.proof,
-                credential_type: reqBody.credential_type,
+                verification_id: reqBody,
                 verification_time: FieldValue.serverTimestamp(),
                 reserved: false,
                 minted: false,
@@ -268,6 +264,7 @@ exports.tally = onSchedule("0 * * * *", async (event) => {
   console.log("events", events[0]);
   for (let i = 0; i < newMints; i++) {
     const mintedTo = events[i].data.mintedTo;
+    const mintBlock = events[i].transaction.blockNumber;
     const iviSnap = await getFirestore()
         .collection("ivis")
         .doc(mintedTo)
@@ -275,7 +272,8 @@ exports.tally = onSchedule("0 * * * *", async (event) => {
     if (iviSnap.exists) {
       await iviSnap.ref.update({
         minted: true,
-        mint_time: FieldValue.serverTimestamp(),
+        mint_block: mintBlock,
+        tally_time: FieldValue.serverTimestamp(),
       });
     } else {
       await getFirestore()

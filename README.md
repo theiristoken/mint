@@ -24,13 +24,12 @@ $$and\enspace T\enspace is\enspace the\enspace current\enspace timestamp\enspace
 
 
 
-When a claim for an allowance is received from an iVI, a wallet specific signature is generated to allow the iVI to mint TiTs. The allowance is in "reserve" mode, which means the iVI secured a position in the queue that allows them to mint. The mintable amount of TiTs is locked in at the time the claim is received. 
+When a claim for an allowance is received from an iVI, a wallet specific signature is generated to allow the iVI to mint TiTs. The allowance is in "reserve" mode, which means the iVI has:
+- secured a position in the queue that allows them to mint and;
+- locked in the amount of TiTs they can possibly mint.
 
-iVIs incur no cost to mint allowances besides network gas fees. Although gas fees are low on Optimism, we may provide gas subsidies to iVIs in need to ensure inclusive access to TiTs.
+The signature is valid for a grace period of one week (7 · 24 · 3600 · 1000 milliseconds). After the grace period is over, if the allowance hasn't been minted, the signature expires and the iVI loses both their spot in the queue and their locked in allowance amount. To be able to eventually mint an allowance, they would ultimately have to submit a new claim.
 
-- If the iVI chooses to pay for gas, they can mint their allowance immediately. 
+iVIs incur no cost to mint allowances besides network gas fees. Although gas fees are low on Optimism, we may provide gas subsidies to iVIs in need.
 
-- If not, the signature is valid for a grace period of one week (7 · 24 · 3600 · 1000 milliseconds) to give iVIs ample time to source the gas fee if need be. After the grace period, if the allowance hasn't been minted, the signature expires and the iVI loses both their spot in the queue and their locked in allowance amount. To be able to mint an allowance, they would ultimately have to submit a new claim.
-
-
-After all allowances are minted, admin rights are renounced to discontinue new TiT creation. To simplify verification by TiT Holders and the general public, the corresponding transaction hash will be made available through TiT diffusion channels.
+After all allowances are minted, admin rights are renounced to discontinue new TiT creation. To simplify verification by TiT Holders and the general public, the corresponding transaction data will be made available through TiT diffusion channels.

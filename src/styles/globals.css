@@ -10,16 +10,22 @@ svg:hover {
   0% {
     transform: none;
   }
-  20% {
-    transform: translateX(-68px) translateY(30px) skewX(15deg) skewY(-10deg) scale(0.95);
+  5% {
+    transform: translateX(-66px) translateY(-33px) skewX(5deg) skewY(-10deg) scale(0.95);
   }
-  25%, 44% {
+  15%, 20% {
+    transform: translateX(-66px) translateY(33px) skewX(15deg) skewY(-10deg) scale(0.95);
+  }
+  25%, 42% {
     transform: none;
   }
   50%, 66% {
-    transform: translateX(68px) translateY(-40px) skewX(5deg) skewY(2deg) scaleX(0.95);
+    transform: translateX(66px) translateY(-33px) skewX(5deg) skewY(2deg) scaleX(0.95);
   }
-  66%, 100% {
+  66%, 80% {
+    transform: translateX(66px) translateY(33px) skewX(-15deg) skewY(10deg) scale(0.95);
+  }
+  80%, 100% {
     transform: none;
   }
 }

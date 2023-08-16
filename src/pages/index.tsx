@@ -15,7 +15,7 @@ export default function Home() {
 	const [ isLoading, setIsLoading ] = useState(true);
 	const [ out, setOut ] = useState(false);
 	const db = getFirestore(Firebase);
-	const start = Constants.testStart;
+	const start = Constants.start;
 	const now = Date.now();
 	const [timeLeftStart, setTimeLeftStart] = useState(start-now);
 

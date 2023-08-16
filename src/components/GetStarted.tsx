@@ -3,11 +3,10 @@ import { ConnectWallet } from "@thirdweb-dev/react";
 export default function GetStarted({time, out}: {time: number, out: boolean}) {
 
 	const formatTime = (num: number) =>{
-		const d = Math.floor(num/(24*3600*1000));
-		const h = Math.floor((num-d*24*3600*1000)/(3600*1000));
-		const m = Math.floor((num-d*24*3600*1000-h*3600*1000)/(60*1000));
-		const s = Math.floor((num-d*24*3600*1000-h*3600*1000-m*60*1000)/(1000));
-		return (' in ' + d.toString().padStart(2, '0')+' :'+ h.toString().padStart(2, '0')+' :'+m.toString().padStart(2, '0')+' :'+s.toString().padStart(2, '0'));
+		const h = Math.floor((num)/(3600*1000));
+		const m = Math.floor((num-h*3600*1000)/(60*1000));
+		const s = Math.floor((num-h*3600*1000-m*60*1000)/(1000));
+		return (' in ' + h.toString().padStart(2, '0')+' :'+m.toString().padStart(2, '0')+' :'+s.toString().padStart(2, '0'));
 	}
 
 	const evaluate = (d:number)=>{
