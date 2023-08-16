@@ -194,7 +194,7 @@ exports.claim = onRequest(claimOptions, async (req, res)=> {
         }
         if (reservePossible) {
           const amount = Number(newSig.payload.quantity);
-          const reserveEnd = now + 7*24*3600*1000;
+          const reserveEnd = ((now>start)?now:start) + 7*24*3600*1000;
           iviSnap.ref.update({
             amount: amount,
             signature: JSON.parse(JSON.stringify(newSig)),
