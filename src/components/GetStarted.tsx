@@ -57,7 +57,7 @@ export default function GetStarted({time, out}: {time: number, out: boolean}) {
 			</div>
 			
 			<div className="my-4 self-center">
-				<ConnectWallet btnTitle="Get Started" className="rounded-lg hover:bg-white" style={{fontWeight:'bold', fontSize:'large'}}/>
+				<ConnectWallet btnTitle="Get Started" style={{fontWeight:'bold', fontSize:'large', borderRadius:'0.5em'}}/>
 			</div>
 		</div>
 	);

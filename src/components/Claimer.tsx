@@ -144,7 +144,7 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 						className="bg-neutral-200 py-2 px-8 rounded-lg m-4 items-center hover:bg-white disabled:opacity-30">
 						<h1 className="font-bold text-black">Grab TiT Allowance</h1>
 					</button>
-					<a className="font-bold hover:text-neutral-200 text-slate-600 " href="https://twitter.com/theiristoken" target="_blank">Need gas money?</a>
+					<a className="font-bold hover:text-neutral-200 text-slate-600 " href="https://twitter.com/theiristoken/status/1691796058781761812" target="_blank">Need gas money?</a>
 				</div>}	
 			</div>}
 
