@@ -52,7 +52,7 @@ export default function GetStarted({time, out}: {time: number, out: boolean}) {
 			<div className="p-4 m-4 rounded-lg flex bg-gradient-to-b from-slate-100 to-slate-200 text-lg text-center">
 				<div>
 					<h1 className="font-bold">Claim your allowance</h1>
-					<p>If you make it in time, you may take hold of  {time<=0?evaluate(-time):(10000).toLocaleString("US")} TiTs.</p>
+					<p>If you make it in time, you may grab up to  {time<=0?evaluate(-time):(10000).toLocaleString("US")} TiTs.</p>
 				</div>
 			</div>
 			

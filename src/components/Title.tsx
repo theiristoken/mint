@@ -10,7 +10,8 @@ export default function Title() {
 	return (
 		<div>
 			<div className="flex flex-row items-center justify-center my-4">
-				<p className="text-5xl md:text-6xl font-bold mr-3">The iris Token</p>
+				<a href="/"><p className="text-5xl md:text-6xl font-bold mr-3">The iris Token</p></a>
+				
 				<button onClick={toggleInfo} className="ml-3 text-black px-4 py-1 border-4 border-neutral-200 rounded-full font-bold text-2xl sm:text-3xl md:text-4xl bg-neutral-300 hover:bg-slate-300 hover:text-white">?</button>
 			</div>
 			{showModal && 
