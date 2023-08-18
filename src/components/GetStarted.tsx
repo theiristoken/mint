@@ -1,7 +1,6 @@
-import { useMetamask } from "@thirdweb-dev/react";
+import { ConnectWallet } from "@thirdweb-dev/react";
 
 export default function GetStarted({time, out}: {time: number, out: boolean}) {
-	const connectWithMetamask = useMetamask();
 	const formatTime = (num: number) =>{
 		const h = Math.floor((num)/(3600*1000));
 		const m = Math.floor((num-h*3600*1000)/(60*1000));
@@ -56,11 +55,7 @@ export default function GetStarted({time, out}: {time: number, out: boolean}) {
 			</div>
 			
 			<div className="mt-4 mb-8 self-center z-10">
-				<button 
-						onClick={()=>connectWithMetamask()} 
-						className="bg-neutral-200 py-2 px-8 rounded-lg m-4 items-center hover:bg-white disabled:opacity-30">
-						<h1 className="font-bold text-black">Connect Wallet</h1>
-					</button>
+				<ConnectWallet btnTitle="Get Started" className="hover:bg-white rounded-lg" style={{fontWeight:'bold', fontSize:'large'}}/>
 			</div>
 		</div>
 	);

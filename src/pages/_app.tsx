@@ -1,5 +1,5 @@
 import '@/styles/globals.css'
-import { ThirdwebProvider } from '@thirdweb-dev/react';
+import { ThirdwebProvider, metamaskWallet } from '@thirdweb-dev/react';
 import type { AppProps } from 'next/app'
 import Head from 'next/head';
 import Constants from "@/constants";
@@ -11,7 +11,9 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <ThirdwebProvider 
       clientId={clientId}
-      activeChain={activeChain}>
+      activeChain={activeChain}
+      supportedWallets={[metamaskWallet()]}
+      >
       <Head>
         <title>The iris Token</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
