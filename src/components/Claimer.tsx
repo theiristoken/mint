@@ -74,12 +74,30 @@ export default function Claimer({time, out, address, _claimed, _minted, reserve_
 	const onMint = async (sig: SignedPayload20)=>{
 		setIsMinting(true);
 		setErrorShown(false);
-		tokenContract?.erc20.signature.mint(sig)
+		if(!tokenContract){
+			return;
+		}
+		const unsubscribe = tokenContract.events.addEventListener(
+			"TokensMintedWithSignature",
+			(event) => {
+				const mintedTo = event.data.mintedTo;
+				if (address==mintedTo) {
+					localStorage.setItem('minted'+address, Date.now().toString());
+					setMinted(true);
+					setNewMint(true);
+					setIsMinting(false);
+					console.log(event);
+				}
+			  
+			},
+		  );
+		tokenContract.erc20.signature.mint(sig)
 		.then((tx)=>{
 			localStorage.setItem('minted'+address, Date.now().toString());
 			setMinted(true);
 			setNewMint(true);
 			setIsMinting(false);
+			unsubscribe();
 		}).catch((e)=>{
 			console.log(e);
 			setErrorShown(true);
