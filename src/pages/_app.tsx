@@ -15,7 +15,7 @@ export default function App({ Component, pageProps }: AppProps) {
     const versionString = userAgent.match(/OS ((\d+_?){2,3})\s/);
     if (versionString && versionString[1]){
       const version = Number(versionString[1].replace("_","."));
-      if(version>=16) {
+      if(version>=17) {
         document.body.style.fontFamily = 'Outfit';
       }
     } else {
