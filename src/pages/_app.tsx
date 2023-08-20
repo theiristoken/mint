@@ -21,6 +21,9 @@ export default function App({ Component, pageProps }: AppProps) {
           name="description"
           content="An ERC-20 token for iris Verified Individuals."
         />
+        <link rel="preconnect" href="https://fonts.googleapis.com"/>
+        <link rel="preconnect" href="https://fonts.gstatic.com"/>
+        <link href="https://fonts.googleapis.com/css2?family=Cairo+Play:wght@300;600&display=swap" rel="preload"/>
         <meta
           name="keywords"
           content="Nadir Hajarabi, crypto, cryptocurrency, digital asset, collateral, defi, blockchain, ico, token, worldcoin, iris scan, world id, metamask, orb, orb verification, eye scan, biometrics, proof of personhood"

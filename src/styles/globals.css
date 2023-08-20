@@ -14,10 +14,7 @@ svg:hover {
   background: radial-gradient(circle at 50% 40%, #fcfcfc, #efeff1 66%, #9b5050 100%);
 }
 
-@font-face {
-  font-family: 'Cairo Play';
-  src: url("../../public/CairoPlay-VariableFont_slnt,wght.ttf");
-}
+
 body {
   font-family: 'Cairo Play';
 }
