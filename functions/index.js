@@ -230,7 +230,7 @@ exports.claim = onRequest(claimOptions, async (req, res)=> {
   }
 });
 
-exports.tally = onSchedule("0 0 * * *", async (event) => {
+exports.tally = onSchedule("0 * * * *", async (event) => {
   const tallySnap = await getFirestore()
       .collection("admin")
       .doc("tally")

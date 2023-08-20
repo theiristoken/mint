@@ -22,7 +22,7 @@ export default function Title() {
 				The  <span className="italic">Genesis Offering</span> (GO) awards the earliest 1 million iVIs with allowances of TiTs.</p>
 
 				<p className="text-lg my-4 text-center">
-				The  <span className="italic">Genesis Offering Director</span> (GOD) is <a className="font-bold mx-0 hover:text-neutral-200 text-slate-600" href="https://hajarabi.com" target="_blank">
+				The  <span className="italic">Genesis Offering Director</span> (GOD) is <a className="font-bold mx-0 hover:text-neutral-200 text-slate-600" href="https://www.linkedin.com/in/nadirhajarabi/" target="_blank">
 				Nadir Hajarabi
 					</a>.
 				</p>
