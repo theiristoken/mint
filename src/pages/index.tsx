@@ -23,7 +23,7 @@ export default function Home() {
 		if (address){
 			getClaims();
 		}
-		setTimeout(()=>setIsLoading(false), 500)
+		//setTimeout(()=>setIsLoading(false), 500)
 	},[address])
 
 	useEffect(()=>{
